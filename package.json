@@ -1,0 +1,67 @@
+{
+    "name": "@raphaabreu/precision-math",
+    "version": "0.3.0",
+    "description": "Objects and math functions to ease rounding and ensure enough precision when dealing with small fractions.",
+    "license": "MIT",
+    "repository": "https://github.com/raphaabreu/precision-math",
+    "author": "Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>",
+    "keywords": [
+        "math", "precision"
+    ],
+    "private": true,
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "scripts": {
+        "clean": "rimraf lib && rimraf coverage && rimraf .nyc_output && rimraf lib_test",
+        "format": "prettier --write '{src,test}/**/*.ts'",
+        "lint": "tslint --force --fix --format verbose 'src/**/*.ts'",
+        "prepare": "npm run build",
+        "prebuild": "npm run clean",
+        "build": "tsc --pretty && tsc -p tsconfig.test.json --pretty",
+        "test": "npm run clean && tsc -p tsconfig.test.json --pretty && ava --verbose '**/*-spec.js'",
+        "coverage": "npm run clean && tsc -p tsconfig.test.json --pretty && nyc --exclude '**/*-spec.js' ava '**/*-spec.js' --verbose",
+        "coverage-report": "nyc report --reporter=lcov --reporter=text --reporter=html",
+        "watch": "npm run build -- --watch",
+        "watch:test:ts": "tsc -p tsconfig.test.json --pretty --watch",
+        "watch:test:ava": "ava '**/*-spec.js' --verbose --watch",
+        "watch:test": "run-p watch:test:ts watch:test:ava",
+        "precommit": "lint-staged && npm run build"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "@types/node": "^8.0.53",
+        "ava": "^0.20.0",
+        "coveralls": "^2.0.0",
+        "husky": "^0.14.3",
+        "lint-staged": "^4.3.0",
+        "npm-run-all": "^4.1.2",
+        "nyc": "^10.0.0",
+        "prettier": "^1.8.2",
+        "rimraf": "^2.0.0",
+        "ts-node": "^3.2.0",
+        "tslint": "^5.8.0",
+        "tslint-config-prettier": "^1.6.0",
+        "typescript": "^2.6.1"
+    },
+    "engines": {
+        "node": ">=6.0.0"
+    },
+    "ava": {
+        "require": [
+            "babel-register"
+        ]
+    },
+    "lint-staged": {
+        "src/**/*.ts": [
+            "tslint --fix",
+            "prettier --write",
+            "git add"
+        ],
+        "test/**/*.ts": [
+            "tslint --force --fix",
+            "prettier --write",
+            "git add"
+        ]
+    }
+}
