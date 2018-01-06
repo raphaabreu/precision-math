@@ -6,7 +6,8 @@
     "repository": "https://github.com/raphaabreu/precision-math",
     "author": "Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>",
     "keywords": [
-        "math", "precision"
+        "math",
+        "precision"
     ],
     "private": true,
     "main": "lib/index.js",
@@ -27,8 +28,7 @@
         "watch:test": "run-p watch:test:ts watch:test:ava",
         "precommit": "lint-staged && npm run build"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/node": "^8.0.53",
         "ava": "^0.20.0",
