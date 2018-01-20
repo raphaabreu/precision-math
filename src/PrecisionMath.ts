@@ -24,6 +24,7 @@
 import { InvalidPrecisionError } from "./Errors/InvalidPrecisionError";
 import { InvalidValueError } from "./Errors/InvalidValueError";
 import { UnsafeCalculationError } from "./Errors/UnsafeCalculationError";
+import { IValueMap } from "./Model/IBalance";
 import { Precision } from "./Model/Precision";
 
 /**
@@ -186,10 +187,9 @@ export function greatestCommonFactor(
  * Counts how many decimal places are in the given numeric string representation.
  */
 export function countDecimalPlaces(value: string): number {
-    const match = ("" + value).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
-    if (!match) {
-        return 0;
-    }
+    const match = ("" + value).match(
+        /(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/
+    ) as string[];
     return Math.max(
         0,
         // Number of digits right of decimal point.
@@ -221,4 +221,26 @@ export function toFixed(value: number, precision: Precision): string {
  */
 export function toFixedPercentage(value: number, precision: Precision): string {
     return toFixed(value * 100, precision) + "%";
+}
+
+/**
+ * Parses the given object as a value map.
+ */
+export function parseValueMap(map: any): IValueMap {
+    const result: IValueMap = {};
+    for (const symbol of Object.getOwnPropertyNames(map)) {
+        result[symbol] = parseFloat(map[symbol]);
+    }
+    return result;
+}
+
+/**
+ * Parses the given value as float.
+ */
+export function parseFloat(value: any): number {
+    if (String(value).trim() === "" || isNaN(value * 1)) {
+        throw new InvalidValueError("Value '" + value + "' should be a number");
+    }
+
+    return Number(value);
 }

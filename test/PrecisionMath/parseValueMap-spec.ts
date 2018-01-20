@@ -22,24 +22,38 @@
  */
 
 import test from "ava";
-import { countDecimalPlaces, Precision } from "../../src/index";
+import { parseValueMap } from "../../src/index";
 
-test("Should count the number of decimal places on the string representation", t => {
-    t.is(countDecimalPlaces(".05"), 2);
-    t.is(countDecimalPlaces(".5"), 1);
-    t.is(countDecimalPlaces("1"), 0);
-    t.is(countDecimalPlaces("25e-100"), 100);
-    t.is(countDecimalPlaces("2.5e-99"), 100);
-    t.is(countDecimalPlaces(".5e1"), 0);
-    t.is(countDecimalPlaces(".25e1"), 1);
+test("Should parse string and number based maps as IValueMaps", t => {
+    t.deepEqual(
+        parseValueMap({ A: 1, B: 2, C: "3", D: 0, E: "0", F: "1e-8" }),
+        { A: 1, B: 2, C: 3, D: 0, E: 0, F: 1e-8 }
+    );
+});
 
-    t.is(countDecimalPlaces("-.05"), 2);
-    t.is(countDecimalPlaces("-.5"), 1);
-    t.is(countDecimalPlaces("-1"), 0);
-    t.is(countDecimalPlaces("-25e-100"), 100);
-    t.is(countDecimalPlaces("-2.5e-99"), 100);
-    t.is(countDecimalPlaces("-.5e1"), 0);
-    t.is(countDecimalPlaces("-.25e1"), 1);
+test("Should throw if trying to parse an object map as IValueMap", t => {
+    const value = { test: { B: "a" } };
+    const error = t.throws(() => {
+        parseValueMap(value);
+    });
 
-    t.is(countDecimalPlaces("abc"), 0);
+    t.is(error.message, "Value '[object Object]' should be a number");
+});
+
+test("Should throw if trying to parse a non-number string as IValueMap", t => {
+    const value = { A: "574.6a" };
+    const error = t.throws(() => {
+        parseValueMap(value);
+    });
+
+    t.is(error.message, "Value '574.6a' should be a number");
+});
+
+test("Should throw if trying to parse an empty string as IValueMap", t => {
+    const value = { A: "" };
+    const error = t.throws(() => {
+        parseValueMap(value);
+    });
+
+    t.is(error.message, "Value '' should be a number");
 });

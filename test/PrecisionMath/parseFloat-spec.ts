@@ -22,24 +22,40 @@
  */
 
 import test from "ava";
-import { countDecimalPlaces, Precision } from "../../src/index";
+import { parseFloat } from "../../src/index";
 
-test("Should count the number of decimal places on the string representation", t => {
-    t.is(countDecimalPlaces(".05"), 2);
-    t.is(countDecimalPlaces(".5"), 1);
-    t.is(countDecimalPlaces("1"), 0);
-    t.is(countDecimalPlaces("25e-100"), 100);
-    t.is(countDecimalPlaces("2.5e-99"), 100);
-    t.is(countDecimalPlaces(".5e1"), 0);
-    t.is(countDecimalPlaces(".25e1"), 1);
+test("Should parse string and numbers as floats", t => {
+    t.is(parseFloat(-5.3), -5.3);
+    t.is(parseFloat(0), 0);
+    t.is(parseFloat(14.2), 14.2);
+    t.is(parseFloat("-10"), -10);
+    t.is(parseFloat("0"), 0);
+    t.is(parseFloat("551.1"), 551.1);
+});
 
-    t.is(countDecimalPlaces("-.05"), 2);
-    t.is(countDecimalPlaces("-.5"), 1);
-    t.is(countDecimalPlaces("-1"), 0);
-    t.is(countDecimalPlaces("-25e-100"), 100);
-    t.is(countDecimalPlaces("-2.5e-99"), 100);
-    t.is(countDecimalPlaces("-.5e1"), 0);
-    t.is(countDecimalPlaces("-.25e1"), 1);
+test("Should throw if trying to parse an object as float", t => {
+    const value = { test: "a" };
+    const error = t.throws(() => {
+        parseFloat(value);
+    });
 
-    t.is(countDecimalPlaces("abc"), 0);
+    t.is(error.message, "Value '[object Object]' should be a number");
+});
+
+test("Should throw if trying to parse a non-number string as float", t => {
+    const value = "574.6a";
+    const error = t.throws(() => {
+        parseFloat(value);
+    });
+
+    t.is(error.message, "Value '574.6a' should be a number");
+});
+
+test("Should throw if trying to parse an empty string as float", t => {
+    const value = "";
+    const error = t.throws(() => {
+        parseFloat(value);
+    });
+
+    t.is(error.message, "Value '' should be a number");
 });
