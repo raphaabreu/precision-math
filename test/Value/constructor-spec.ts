@@ -59,3 +59,16 @@ test("Should throw if trying to instantiate with a non-numeric precision", t => 
 
     t.is(error.message, "Precision is not a number.");
 });
+
+test("Should throw if trying to instantiate with a value that cannot be represented on the given precision", t => {
+    process.env.STRICT_PRECISION = "true";
+
+    const error = t.throws(() => new Value(100.0001, "BTC", Precision.Cent));
+
+    process.env.STRICT_PRECISION = undefined;
+
+    t.is(
+        error.message,
+        "The amount 100.0001 cannot be represented using the precision 0.01 without loss of information."
+    );
+});

@@ -176,3 +176,16 @@ test("Should throw if trying to instantiate with an invalid argument", t => {
 
     t.is(error.message, "Cannot convert 'string' to Value: test.");
 });
+
+test("Should throw if trying to instantiate with a value that cannot be represented on the given precision", t => {
+    process.env.STRICT_PRECISION = "true";
+
+    const error = t.throws(() => new Balance({ BTC: 1.00001 }, Precision.Cent));
+
+    process.env.STRICT_PRECISION = undefined;
+
+    t.is(
+        error.message,
+        "The amount 1.00001 cannot be represented using the precision 0.01 without loss of information."
+    );
+});
