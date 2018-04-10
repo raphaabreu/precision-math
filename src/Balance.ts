@@ -45,6 +45,42 @@ export class Balance implements Model.IBalance {
     }
 
     /**
+     * Creates a new Balance by rounding the given value to the given precision.
+     */
+    public static round(
+        value: Model.IBalance | Model.IValue | Model.IValue[] | Model.IValueMap,
+        precision: Model.Precision
+    ): Model.IBalance {
+        const normalized = normalize(value, precision, PrecisionMath.round);
+
+        return new Balance(normalized.map, normalized.precision);
+    }
+
+    /**
+     * Creates a new Balance by flooring the given value to the given precision.
+     */
+    public static floor(
+        value: Model.IBalance | Model.IValue | Model.IValue[] | Model.IValueMap,
+        precision: Model.Precision
+    ): Model.IBalance {
+        const normalized = normalize(value, precision, PrecisionMath.floor);
+
+        return new Balance(normalized.map, normalized.precision);
+    }
+
+    /**
+     * Creates a new Balance by ceiling the given value to the given precision.
+     */
+    public static ceil(
+        value: Model.IBalance | Model.IValue | Model.IValue[] | Model.IValueMap,
+        precision: Model.Precision
+    ): Model.IBalance {
+        const normalized = normalize(value, precision, PrecisionMath.ceil);
+
+        return new Balance(normalized.map, normalized.precision);
+    }
+
+    /**
      * Map of values present on this Balance.
      */
     public readonly values: Model.IValueMap;
@@ -244,7 +280,8 @@ export class Balance implements Model.IBalance {
         let precision = this.precision;
         const normalizedValues: INormalizedValueMap[] = normalizeList(
             value,
-            precision
+            precision,
+            PrecisionMath.round
         );
 
         for (const item of normalizedValues) {
@@ -285,7 +322,8 @@ export class Balance implements Model.IBalance {
         let precision = this.precision;
         const normalizedValues: INormalizedValueMap[] = normalizeList(
             value,
-            precision
+            precision,
+            PrecisionMath.round
         );
 
         for (const item of normalizedValues) {
@@ -401,7 +439,11 @@ export class Balance implements Model.IBalance {
     }
 }
 
-function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
+function normalize(
+    item: any,
+    precision: Model.Precision,
+    rounding?: (amount: number, precision: Model.Precision) => number
+): INormalizedValueMap {
     // Balances get their values copied
     if (item instanceof Balance) {
         return {
@@ -434,7 +476,7 @@ function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
     // Arrays
     if (Array.isArray(item)) {
         for (const element of item) {
-            const normalizedItem = normalize(element, precision);
+            const normalizedItem = normalize(element, precision, rounding);
 
             for (const symbol of Object.getOwnPropertyNames(
                 normalizedItem.map
@@ -469,20 +511,24 @@ function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
                 );
             }
 
-            normalized.map[property] = PrecisionMath.round(
-                item[property],
-                precision
-            );
-
-            if (
-                process.env.STRICT_PRECISION !== undefined &&
-                normalized.map[property] !== Number(item[property])
-            ) {
-                throw new Errors.UnsafeCalculationError(
-                    `The amount ${
-                        item[property]
-                    } cannot be represented using the precision ${precision} without loss of information.`
+            if (rounding !== undefined) {
+                normalized.map[property] = rounding(item[property], precision);
+            } else {
+                normalized.map[property] = PrecisionMath.round(
+                    item[property],
+                    precision
                 );
+
+                if (
+                    process.env.STRICT_PRECISION !== undefined &&
+                    normalized.map[property] !== Number(item[property])
+                ) {
+                    throw new Errors.UnsafeCalculationError(
+                        `The amount ${
+                            item[property]
+                        } cannot be represented using the precision ${precision} without loss of information.`
+                    );
+                }
             }
         }
         return normalized;
@@ -496,18 +542,21 @@ function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
 
 function normalizeList(
     list: any,
-    precision: Model.Precision
+    precision: Model.Precision,
+    rounding: (amount: number, precision: Model.Precision) => number
 ): INormalizedValueMap[] {
     // If not array, return list with single normalization
     if (!Array.isArray(list)) {
-        return [normalize(list, precision)];
+        return [normalize(list, precision, rounding)];
     }
 
     // Otherwise, normalize each element and add it to array
     let normalized: INormalizedValueMap[] = [];
 
     for (const element of list) {
-        normalized = normalized.concat(normalizeList(element, precision));
+        normalized = normalized.concat(
+            normalizeList(element, precision, rounding)
+        );
     }
 
     return normalized;

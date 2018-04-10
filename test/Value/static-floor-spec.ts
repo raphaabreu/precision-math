@@ -25,6 +25,8 @@ import test from "ava";
 import { Precision, Value } from "../../src/index";
 
 test("Should create new Value flooring amount to given precision", t => {
+    process.env.STRICT_PRECISION = "true";
+
     t.deepEqual(
         Value.floor(1.23456789, "BTC", Precision.Hundredth),
         new Value(1.23, "BTC", Precision.Hundredth)
@@ -33,4 +35,6 @@ test("Should create new Value flooring amount to given precision", t => {
         Value.floor(1.23987654, "BTC", Precision.Hundredth),
         new Value(1.23, "BTC", Precision.Hundredth)
     );
+
+    process.env.STRICT_PRECISION = undefined;
 });

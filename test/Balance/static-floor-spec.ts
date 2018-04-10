@@ -22,18 +22,21 @@
  */
 
 import test from "ava";
-import { Precision, Value } from "../../src/index";
+import { Balance, Precision } from "../../src/index";
 
-test("Should create new Value ceiling amount to given precision", t => {
+test("Should create new Balance flooring the value to given precision", t => {
     process.env.STRICT_PRECISION = "true";
 
     t.deepEqual(
-        Value.ceil(1.23456789, "BTC", Precision.Hundredth),
-        new Value(1.24, "BTC", Precision.Hundredth)
-    );
-    t.deepEqual(
-        Value.ceil(1.23987654, "BTC", Precision.Hundredth),
-        new Value(1.24, "BTC", Precision.Hundredth)
+        Balance.floor(
+            {
+                BTC: 45.12345679,
+                XMR: -18.19765432,
+                LTC: 40.69257802
+            },
+            Precision.Hundredth
+        ),
+        new Balance({ BTC: 45.12, XMR: -18.2, LTC: 40.69 }, Precision.Hundredth)
     );
 
     process.env.STRICT_PRECISION = undefined;
