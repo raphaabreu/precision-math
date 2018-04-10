@@ -9,7 +9,7 @@
         ],
         "target": "es6",
         "noImplicitAny": true,
-        "outDir": "./lib_test",
+        "outDir": "./lib",
         "preserveConstEnums": true,
         "removeComments": false,
         "experimentalDecorators": true,
@@ -20,7 +20,10 @@
     },
     "include": [
         "./src/**/*",
-        "./test/**/*",
         "./typings/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*-spec.ts"
     ]
 }

@@ -12,20 +12,18 @@
     "main": "lib/index.js",
     "typings": "lib/index.d.ts",
     "scripts": {
-        "clean": "rimraf lib && rimraf coverage && rimraf .nyc_output && rimraf lib_test",
-        "format": "prettier --write '{src,test}/**/*.ts'",
-        "lint": "tslint --force --fix --format verbose 'src/**/*.ts'",
-        "prepare": "npm run build",
-        "prebuild": "npm run clean",
-        "build": "tsc --pretty && tsc -p tsconfig.test.json --pretty",
-        "test": "npm run clean && tsc -p tsconfig.test.json --pretty && ava --verbose '**/*-spec.js'",
-        "coverage": "npm run clean && tsc -p tsconfig.test.json --pretty && nyc --exclude '**/*-spec.js' ava '**/*-spec.js' --verbose",
+        "clean": "rimraf coverage && rimraf .nyc_output && rimraf lib_test",
+        "format": "prettier --write '{src,test}/**/*.ts' && tslint --force --fix --format verbose 'src/**/*.ts'",
+        "build": "npm run clean && rimraf lib && tsc -p tsconfig.build.json --pretty",
+        "build-test": "npm run clean && tsc --pretty",
+        "test": "npm run build-test && ava",
+        "coverage": "npm run build-test && nyc ava",
         "coverage-report": "nyc report --reporter=lcov --reporter=text --reporter=html",
         "watch": "npm run build -- --watch",
-        "watch:test:ts": "tsc -p tsconfig.test.json --pretty --watch",
-        "watch:test:ava": "ava '**/*-spec.js' --verbose --watch",
+        "watch:test:ts": "tsc --pretty --watch",
+        "watch:test:ava": "ava --watch",
         "watch:test": "run-p watch:test:ts watch:test:ava",
-        "precommit": "lint-staged && npm run build"
+        "precommit": "lint-staged && npm test && npm run build"
     },
     "dependencies": {},
     "devDependencies": {
@@ -44,12 +42,24 @@
         "typescript": "^2.6.1"
     },
     "engines": {
-        "node": ">=6.0.0"
+        "node": ">=9.0.0"
     },
     "ava": {
+        "concurrency": 8,
+        "verbose": true,
+        "files": [
+            "./lib_test/**/*-spec.js"
+        ],
         "require": [
             "babel-register"
         ]
+    },
+    "nyc": {
+        "exclude": [
+            "**/*-spec.js",
+            "**/test/**/*.js"
+        ],
+        "cache": true
     },
     "lint-staged": {
         "src/**/*.ts": [
