@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import * as Errors from "./Errors";
 import * as Model from "./Model";
 import * as PrecisionMath from "./PrecisionMath";
 
@@ -28,6 +29,51 @@ import * as PrecisionMath from "./PrecisionMath";
  * Represents an amount on a symbol using a specific precision.
  */
 export class Value implements Model.IValue {
+    /**
+     * Creates a new Value by rounding the given amount to the given precision.
+     */
+    public static round(
+        amount: number,
+        symbol: string,
+        precision: Model.Precision
+    ): Value {
+        return new Value(
+            PrecisionMath.round(amount, precision),
+            symbol,
+            precision
+        );
+    }
+
+    /**
+     * Creates a new Value by flooring the given amount to the given precision.
+     */
+    public static floor(
+        amount: number,
+        symbol: string,
+        precision: Model.Precision
+    ): Value {
+        return new Value(
+            PrecisionMath.floor(amount, precision),
+            symbol,
+            precision
+        );
+    }
+
+    /**
+     * Creates a new Value by ceiling the given amount to the given precision.
+     */
+    public static ceil(
+        amount: number,
+        symbol: string,
+        precision: Model.Precision
+    ): Value {
+        return new Value(
+            PrecisionMath.ceil(amount, precision),
+            symbol,
+            precision
+        );
+    }
+
     /**
      * Numeric amount represented by the Value.
      */
@@ -48,18 +94,27 @@ export class Value implements Model.IValue {
      */
     constructor(amount: number, symbol: string, precision: Model.Precision) {
         if (Number.isNaN(amount)) {
-            throw new Error("Amount is not a number.");
+            throw new Errors.InvalidValueError("Amount is not a number.");
         }
         if (!symbol) {
-            throw new Error("Symbol is required.");
+            throw new Errors.InvalidValueError("Symbol is required.");
         }
         if (Number.isNaN(precision)) {
-            throw new Error("Precision is not a number.");
+            throw new Errors.InvalidValueError("Precision is not a number.");
         }
 
         this.amount = PrecisionMath.round(amount, precision);
         this.symbol = symbol;
         this.precision = precision;
+
+        if (
+            process.env.STRICT_PRECISION !== undefined &&
+            this.amount !== amount
+        ) {
+            throw new Errors.UnsafeCalculationError(
+                `The amount ${amount} cannot be represented using the precision ${precision} without loss of information.`
+            );
+        }
     }
 
     /**
@@ -258,7 +313,7 @@ export class Value implements Model.IValue {
 
     private validateOperation(value: Model.IValue): void {
         if (value.symbol !== this.symbol) {
-            throw new Error(
+            throw new Errors.InvalidValueError(
                 `Cannot operate values with different symbols ${
                     value.symbol
                 } / ${this.symbol}.`

@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import * as Errors from "./Errors";
 import * as Model from "./Model";
 import * as PrecisionMath from "./PrecisionMath";
 import { Value } from "./Value";
@@ -440,7 +441,7 @@ function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
             )) {
                 // Throws an error if a symbol is repeated.
                 if (symbol in normalized.map) {
-                    throw new Error(
+                    throw new Errors.InvalidValueError(
                         "Operation invalid due to repeated symbols: " + symbol
                     );
                 }
@@ -461,7 +462,7 @@ function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
         for (const property of Object.getOwnPropertyNames(item)) {
             // Throws an error if object has property that is not a number.
             if (typeof item[property] !== "number") {
-                throw new Error(
+                throw new Errors.InvalidValueError(
                     `Cannot convert obj['${property}'] = '${typeof item[
                         property
                     ]}' to Value.`
@@ -472,12 +473,25 @@ function normalize(item: any, precision: Model.Precision): INormalizedValueMap {
                 item[property],
                 precision
             );
+
+            if (
+                process.env.STRICT_PRECISION !== undefined &&
+                normalized.map[property] !== Number(item[property])
+            ) {
+                throw new Errors.UnsafeCalculationError(
+                    `The amount ${
+                        item[property]
+                    } cannot be represented using the precision ${precision} without loss of information.`
+                );
+            }
         }
         return normalized;
     }
 
     // Otherwise not supported
-    throw new Error(`Cannot convert '${typeof item}' to Value: ${item}.`);
+    throw new Errors.InvalidValueError(
+        `Cannot convert '${typeof item}' to Value: ${item}.`
+    );
 }
 
 function normalizeList(
