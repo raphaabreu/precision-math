@@ -14,6 +14,7 @@
     "scripts": {
         "clean": "rimraf coverage && rimraf .nyc_output && rimraf lib_test",
         "format": "prettier --write '{src,test}/**/*.ts' && tslint --force --fix --format verbose 'src/**/*.ts'",
+        "prepare": "npm run build",
         "build": "npm run clean && rimraf lib && tsc -p tsconfig.build.json --pretty",
         "build-test": "npm run clean && tsc --pretty",
         "test": "npm run build-test && ava",
