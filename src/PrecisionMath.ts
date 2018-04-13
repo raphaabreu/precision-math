@@ -29,9 +29,18 @@ import { Precision } from "./Model/Precision";
 import { Rounding } from "./Model/Rounding";
 
 /**
+ * Ensures that the given value is safe to calculate.
+ */
+function assertSafety(value: number): void {
+    if (value > Number.MAX_SAFE_INTEGER || value < Number.MIN_SAFE_INTEGER) {
+        throw new UnsafeCalculationError();
+    }
+}
+
+/**
  * Rounds to the integer value using the given rounding strategy.
  */
-export function roundInt(value: number, rounding: Rounding): number {
+function roundTo(value: number, rounding: Rounding): number {
     switch (rounding) {
         case Rounding.Ceil:
             return Math.ceil(value);
@@ -69,30 +78,18 @@ export function precisionDivisor(precision: Precision): number {
 /**
  * Transforms the float number into an integer using the given precision.
  */
-export function toInt(
-    value: number,
-    precision: Precision,
-    rounding: Rounding = Rounding.Nearest
-): number {
-    const answer = roundInt(value * precisionDivisor(precision), rounding);
-    if (answer > Number.MAX_SAFE_INTEGER || answer < Number.MIN_SAFE_INTEGER) {
-        throw new UnsafeCalculationError();
-    }
-    return answer;
+function toInt(value: number, precision: Precision): number {
+    value = value * precisionDivisor(precision);
+    assertSafety(value);
+    return value;
 }
 
 /**
  * Transforms the integer into a float using the given precision.
  */
-export function toFloat(
-    value: number,
-    precision: Precision,
-    rounding: Rounding = Rounding.Nearest
-): number {
-    if (value > Number.MAX_SAFE_INTEGER || value < Number.MIN_SAFE_INTEGER) {
-        throw new UnsafeCalculationError();
-    }
-    return roundInt(value, rounding) / precisionDivisor(precision);
+function toFloat(value: number, precision: Precision): number {
+    assertSafety(value);
+    return value / precisionDivisor(precision);
 }
 
 /**
@@ -103,30 +100,35 @@ export function round(
     precision: Precision,
     rounding: Rounding = Rounding.Nearest
 ): number {
-    return (
-        roundInt(value * precisionDivisor(precision), rounding) /
-        precisionDivisor(precision)
-    );
+    if (rounding === Rounding.Nearest) {
+        return nearest(value, precision);
+    } else {
+        return toFloat(
+            roundTo(Math.round(toInt(value, precision / 10)) / 10, rounding),
+            precision
+        );
+    }
+}
+
+/**
+ * Rounds up the value given using the desired precision.
+ */
+export function nearest(value: number, precision: Precision): number {
+    return toFloat(Math.round(toInt(value, precision)), precision);
 }
 
 /**
  * Rounds up the value given using the desired precision.
  */
 export function ceil(value: number, precision: Precision): number {
-    return (
-        roundInt(value * precisionDivisor(precision), Rounding.Ceil) /
-        precisionDivisor(precision)
-    );
+    return toFloat(Math.ceil(toInt(value, precision)), precision);
 }
 
 /**
  * Rounds down the value given using the desired precision.
  */
 export function floor(value: number, precision: Precision): number {
-    return (
-        roundInt(value * precisionDivisor(precision), Rounding.Floor) /
-        precisionDivisor(precision)
-    );
+    return toFloat(Math.floor(toInt(value, precision)), precision);
 }
 
 /**
@@ -139,9 +141,11 @@ export function add(
     rounding: Rounding = Rounding.Nearest
 ): number {
     return toFloat(
-        a * precisionDivisor(precision) + b * precisionDivisor(precision),
-        precision,
-        rounding
+        roundTo(
+            a * precisionDivisor(precision) + b * precisionDivisor(precision),
+            rounding
+        ),
+        precision
     );
 }
 
@@ -155,9 +159,11 @@ export function subtract(
     rounding: Rounding = Rounding.Nearest
 ): number {
     return toFloat(
-        a * precisionDivisor(precision) - b * precisionDivisor(precision),
-        precision,
-        rounding
+        roundTo(
+            a * precisionDivisor(precision) - b * precisionDivisor(precision),
+            rounding
+        ),
+        precision
     );
 }
 
@@ -170,7 +176,7 @@ export function multiply(
     precision: Precision,
     rounding: Rounding = Rounding.Nearest
 ): number {
-    return round(a * b, precision, rounding);
+    return toFloat(roundTo(toInt(a * b, precision), rounding), precision);
 }
 
 /**
@@ -182,20 +188,15 @@ export function divide(
     precision: Precision,
     rounding: Rounding = Rounding.Nearest
 ): number {
-    return round(a / b, precision, rounding);
+    return toFloat(roundTo(toInt(a / b, precision), rounding), precision);
 }
 
 /**
  * Calculates rest of the division of two values using the desired precision.
  */
-export function modulo(
-    a: number,
-    b: number,
-    precision: Precision,
-    rounding: Rounding = Rounding.Nearest
-): number {
+export function modulo(a: number, b: number, precision: Precision): number {
     return (
-        (toInt(a, precision, rounding) % toInt(b, precision, rounding)) /
+        (toInt(a, precision) % toInt(b, precision)) /
         precisionDivisor(precision)
     );
 }

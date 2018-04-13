@@ -22,7 +22,7 @@
  */
 
 import test from "ava";
-import { multiply, Precision } from "../../src/index";
+import { multiply, Precision, Rounding } from "../../src/index";
 
 test("Should multiply numbers to desired precision", t => {
     t.is(multiply(Math.E, Math.PI, Precision.Integer), 9);
@@ -37,4 +37,8 @@ test("Should multiply numbers to desired precision", t => {
     t.is(multiply(Math.E, Math.PI, Precision.Billionth), 8.539734223);
     t.is(multiply(Math.E, Math.PI, Precision.TenBillionth), 8.5397342227);
     t.is(multiply(Math.E, Math.PI, Precision.HundredBillionth), 8.53973422267);
+});
+
+test("Should multiply numbers to desired precision using custom rounding", t => {
+    t.is(multiply(2002, 0.001, Precision.TenThousandth, Rounding.Up), 2.002);
 });
