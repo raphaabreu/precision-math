@@ -35,40 +35,11 @@ export class Value implements Model.IValue {
     public static round(
         amount: number,
         symbol: string,
-        precision: Model.Precision
+        precision: Model.Precision,
+        rounding: Model.Rounding = Model.Rounding.Nearest
     ): Value {
         return new Value(
-            PrecisionMath.round(amount, precision),
-            symbol,
-            precision
-        );
-    }
-
-    /**
-     * Creates a new Value by flooring the given amount to the given precision.
-     */
-    public static floor(
-        amount: number,
-        symbol: string,
-        precision: Model.Precision
-    ): Value {
-        return new Value(
-            PrecisionMath.floor(amount, precision),
-            symbol,
-            precision
-        );
-    }
-
-    /**
-     * Creates a new Value by ceiling the given amount to the given precision.
-     */
-    public static ceil(
-        amount: number,
-        symbol: string,
-        precision: Model.Precision
-    ): Value {
-        return new Value(
-            PrecisionMath.ceil(amount, precision),
+            PrecisionMath.round(amount, precision, rounding),
             symbol,
             precision
         );

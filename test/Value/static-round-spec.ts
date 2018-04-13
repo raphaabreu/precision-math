@@ -22,11 +22,18 @@
  */
 
 import test from "ava";
-import { Precision, Value } from "../../src/index";
+
+import { Precision, Rounding, Value } from "../../src/index";
+
+test.beforeEach(t => {
+    process.env.STRICT_PRECISION = "true";
+});
+
+test.afterEach(t => {
+    process.env.STRICT_PRECISION = undefined;
+});
 
 test("Should create new Value rounding amount to given precision", t => {
-    process.env.STRICT_PRECISION = "true";
-
     t.deepEqual(
         Value.round(1.23456789, "BTC", Precision.Hundredth),
         new Value(1.23, "BTC", Precision.Hundredth)
@@ -35,6 +42,88 @@ test("Should create new Value rounding amount to given precision", t => {
         Value.round(1.23987654, "BTC", Precision.Hundredth),
         new Value(1.24, "BTC", Precision.Hundredth)
     );
+    t.deepEqual(
+        Value.round(-1.23456789, "BTC", Precision.Hundredth),
+        new Value(-1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23987654, "BTC", Precision.Hundredth),
+        new Value(-1.24, "BTC", Precision.Hundredth)
+    );
+});
 
-    process.env.STRICT_PRECISION = undefined;
+test("Should create new Value flooring amount to given precision", t => {
+    t.deepEqual(
+        Value.round(1.23456789, "BTC", Precision.Hundredth, Rounding.Floor),
+        new Value(1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(1.23987654, "BTC", Precision.Hundredth, Rounding.Floor),
+        new Value(1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23456789, "BTC", Precision.Hundredth, Rounding.Floor),
+        new Value(-1.24, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23987654, "BTC", Precision.Hundredth, Rounding.Floor),
+        new Value(-1.24, "BTC", Precision.Hundredth)
+    );
+});
+
+test("Should create new Value ceiling amount to given precision", t => {
+    t.deepEqual(
+        Value.round(1.23456789, "BTC", Precision.Hundredth, Rounding.Ceil),
+        new Value(1.24, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(1.23987654, "BTC", Precision.Hundredth, Rounding.Ceil),
+        new Value(1.24, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23456789, "BTC", Precision.Hundredth, Rounding.Ceil),
+        new Value(-1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23987654, "BTC", Precision.Hundredth, Rounding.Ceil),
+        new Value(-1.23, "BTC", Precision.Hundredth)
+    );
+});
+
+test("Should create new Value rounding amount up to given precision", t => {
+    t.deepEqual(
+        Value.round(1.23456789, "BTC", Precision.Hundredth, Rounding.Up),
+        new Value(1.24, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(1.23987654, "BTC", Precision.Hundredth, Rounding.Up),
+        new Value(1.24, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23456789, "BTC", Precision.Hundredth, Rounding.Up),
+        new Value(-1.24, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23987654, "BTC", Precision.Hundredth, Rounding.Up),
+        new Value(-1.24, "BTC", Precision.Hundredth)
+    );
+});
+
+test("Should create new Value rounding amount down to given precision", t => {
+    t.deepEqual(
+        Value.round(1.23456789, "BTC", Precision.Hundredth, Rounding.Down),
+        new Value(1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(1.23987654, "BTC", Precision.Hundredth, Rounding.Down),
+        new Value(1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23456789, "BTC", Precision.Hundredth, Rounding.Down),
+        new Value(-1.23, "BTC", Precision.Hundredth)
+    );
+    t.deepEqual(
+        Value.round(-1.23987654, "BTC", Precision.Hundredth, Rounding.Down),
+        new Value(-1.23, "BTC", Precision.Hundredth)
+    );
 });

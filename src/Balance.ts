@@ -49,33 +49,10 @@ export class Balance implements Model.IBalance {
      */
     public static round(
         value: Model.IBalance | Model.IValue | Model.IValue[] | Model.IValueMap,
-        precision: Model.Precision
+        precision: Model.Precision,
+        rounding: Model.Rounding = Model.Rounding.Nearest
     ): Model.IBalance {
-        const normalized = normalize(value, precision, PrecisionMath.round);
-
-        return new Balance(normalized.map, normalized.precision);
-    }
-
-    /**
-     * Creates a new Balance by flooring the given value to the given precision.
-     */
-    public static floor(
-        value: Model.IBalance | Model.IValue | Model.IValue[] | Model.IValueMap,
-        precision: Model.Precision
-    ): Model.IBalance {
-        const normalized = normalize(value, precision, PrecisionMath.floor);
-
-        return new Balance(normalized.map, normalized.precision);
-    }
-
-    /**
-     * Creates a new Balance by ceiling the given value to the given precision.
-     */
-    public static ceil(
-        value: Model.IBalance | Model.IValue | Model.IValue[] | Model.IValueMap,
-        precision: Model.Precision
-    ): Model.IBalance {
-        const normalized = normalize(value, precision, PrecisionMath.ceil);
+        const normalized = normalize(value, precision, rounding);
 
         return new Balance(normalized.map, normalized.precision);
     }
@@ -280,8 +257,7 @@ export class Balance implements Model.IBalance {
         let precision = this.precision;
         const normalizedValues: INormalizedValueMap[] = normalizeList(
             value,
-            precision,
-            PrecisionMath.round
+            precision
         );
 
         for (const item of normalizedValues) {
@@ -322,8 +298,7 @@ export class Balance implements Model.IBalance {
         let precision = this.precision;
         const normalizedValues: INormalizedValueMap[] = normalizeList(
             value,
-            precision,
-            PrecisionMath.round
+            precision
         );
 
         for (const item of normalizedValues) {
@@ -442,7 +417,7 @@ export class Balance implements Model.IBalance {
 function normalize(
     item: any,
     precision: Model.Precision,
-    rounding?: (amount: number, precision: Model.Precision) => number
+    rounding?: Model.Rounding
 ): INormalizedValueMap {
     // Balances get their values copied
     if (item instanceof Balance) {
@@ -512,7 +487,11 @@ function normalize(
             }
 
             if (rounding !== undefined) {
-                normalized.map[property] = rounding(item[property], precision);
+                normalized.map[property] = PrecisionMath.round(
+                    item[property],
+                    precision,
+                    rounding
+                );
             } else {
                 normalized.map[property] = PrecisionMath.round(
                     item[property],
@@ -543,7 +522,7 @@ function normalize(
 function normalizeList(
     list: any,
     precision: Model.Precision,
-    rounding: (amount: number, precision: Model.Precision) => number
+    rounding?: Model.Rounding
 ): INormalizedValueMap[] {
     // If not array, return list with single normalization
     if (!Array.isArray(list)) {

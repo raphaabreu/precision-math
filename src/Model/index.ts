@@ -21,7 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./Precision";
 export * from "./IBalance";
-export * from "./IValue";
 export * from "./IConvertible";
+export * from "./IValue";
+export * from "./Precision";
+export * from "./Rounding";
