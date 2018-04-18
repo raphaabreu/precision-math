@@ -21,9 +21,34 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./IBalance";
-export * from "./IConvertible";
-export * from "./IValue";
-export * from "./IVector";
-export * from "./Precision";
-export * from "./Rounding";
+/**
+ * Multi dimensional vector.
+ */
+export interface IVector {
+    [key: string]: number;
+}
+
+/**
+ * Labeled matrix of multi dimensional vectors.
+ */
+export interface IMatrix {
+    [key: string]: IVector;
+}
+
+/**
+ * Returns a promise that till provide the rate between the given dimensions possibly taking into account the original amount.
+ */
+export type getRate = (
+    toDimension: string,
+    fromDimension: string,
+    originalAmount: number
+) => Promise<number>;
+
+/**
+ * Returns the rate between the given dimensions possibly taking into account the original amount.
+ */
+export type getRateSync = (
+    toDimension: string,
+    fromDimension: string,
+    originalAmount: number
+) => number;
