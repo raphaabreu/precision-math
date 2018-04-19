@@ -21,9 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./IBalance";
-export * from "./IConvertible";
-export * from "./IValue";
-export * from "./IVector";
-export * from "./Precision";
-export * from "./Rounding";
+import test from "ava";
+
+import { VectorMath } from "../../src/index";
+
+test("Should get the values from a vector", t => {
+    t.deepEqual(VectorMath.values({}), []);
+    t.deepEqual(VectorMath.values({ A: 1, B: undefined, C: 0, D: -1 }), [
+        { dimension: "A", amount: 1 },
+        { dimension: "B", amount: undefined },
+        { dimension: "C", amount: 0 },
+        { dimension: "D", amount: -1 }
+    ]);
+});

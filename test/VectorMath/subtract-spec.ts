@@ -21,9 +21,27 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./IBalance";
-export * from "./IConvertible";
-export * from "./IValue";
-export * from "./IVector";
-export * from "./Precision";
-export * from "./Rounding";
+import test from "ava";
+
+import { VectorMath } from "../../src/index";
+
+test("Should subtract two vectors", t => {
+    t.deepEqual(VectorMath.subtract({ A: 1 }, { A: -0.4 }), {
+        A: 1.4
+    });
+    t.deepEqual(
+        VectorMath.subtract(
+            { A: 1, B: undefined },
+            { B: -0.4, C: 0, D: undefined }
+        ),
+        {
+            A: 1,
+            B: 0.4,
+            C: 0
+        }
+    );
+    t.deepEqual(VectorMath.subtract({ A: 1, B: 0.5 }, { A: -0.4, B: 2 }), {
+        A: 1.4,
+        B: -1.5
+    });
+});

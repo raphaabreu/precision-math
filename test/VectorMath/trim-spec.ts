@@ -21,9 +21,14 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./IBalance";
-export * from "./IConvertible";
-export * from "./IValue";
-export * from "./IVector";
-export * from "./Precision";
-export * from "./Rounding";
+import test from "ava";
+
+import { VectorMath } from "../../src/index";
+
+test("Should trim a vector", t => {
+    t.deepEqual(VectorMath.trim({}), {});
+    t.deepEqual(VectorMath.trim({ A: 1, B: undefined, C: 0, D: -1 }), {
+        A: 1,
+        D: -1
+    });
+});

@@ -21,9 +21,48 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./IBalance";
-export * from "./IConvertible";
-export * from "./IValue";
-export * from "./IVector";
-export * from "./Precision";
-export * from "./Rounding";
+import test from "ava";
+
+import { VectorMath } from "../../src/index";
+
+test("Should multiply a vector by a scalar", t => {
+    t.deepEqual(VectorMath.multiply({ A: 1 }, 3), {
+        A: 3
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: undefined }, 4), {
+        A: 4,
+        B: undefined
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: 0.5, C: 0 }, 5), {
+        A: 5,
+        B: 2.5,
+        C: 0
+    });
+});
+
+test("Should multiply vector by another vector", t => {
+    t.deepEqual(VectorMath.multiply({ A: 1 }, { B: 2 }), {
+        A: 1
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: undefined }, { B: 2 }), {
+        A: 1,
+        B: undefined
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: 0 }, { B: 2 }), {
+        A: 1,
+        B: 0
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: 1 }, { B: 2 }), {
+        A: 1,
+        B: 2
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: 1 }, { B: 2, C: 2 }), {
+        A: 1,
+        B: 2
+    });
+    t.deepEqual(VectorMath.multiply({ A: 1, B: 1, C: 3 }, { B: 2, C: 2 }), {
+        A: 1,
+        B: 2,
+        C: 6
+    });
+});
