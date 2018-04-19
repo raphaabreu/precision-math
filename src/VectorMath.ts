@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { InvalidValueError } from "./Errors/InvalidValueError";
 import {
     getRate,
     getRateSync,
@@ -232,6 +233,21 @@ export class VectorMath {
         }
 
         return response;
+    }
+
+    /**
+     * Asserts that the given vector is single dimension and return its value.
+     */
+    public static assertSingleDimension(vector: IVector): IDimensionValuePair {
+        const values = VectorMath.values(vector);
+
+        if (values.length !== 1) {
+            throw new InvalidValueError(
+                "Single dimension vector expected: " + JSON.stringify(vector)
+            );
+        }
+
+        return values[0];
     }
 
     /**
