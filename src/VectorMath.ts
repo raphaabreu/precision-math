@@ -21,238 +21,349 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { InvalidPrecisionError } from "./Errors/InvalidPrecisionError";
-import { InvalidValueError } from "./Errors/InvalidValueError";
-import { UnsafeCalculationError } from "./Errors/UnsafeCalculationError";
-import { IVector } from "./Model/IVector";
+import {
+    getRate,
+    getRateSync,
+    IDimensionValuePair,
+    IVector
+} from "./Model/IVector";
 import { Precision } from "./Model/Precision";
 import { Rounding } from "./Model/Rounding";
+import { round } from "./PrecisionMath";
 
-/**
- * Adds all the given vectors.
- */
-export function add(input: (IVector | IVector[])...): IVector {
-    const response: IVector = Object.create(null);
-    
-    for (const vector of flatten(input)) {
-        for (const dimension of dimensions(vector)) {
-            if (response[dimension] === undefined) {
-                response[dimension] = vector[dimension];
-            } else {
-                response[dimension] = response[dimension] + vector[dimension];
+export class VectorMath {
+    /**
+     * Adds all the vectors in the given array.
+     * When adding vectors, undefined is treated as zero.
+     */
+    public static add(vectors: IVector[]): IVector;
+
+    /**
+     * Adds both vectors given.
+     * When adding vectors, undefined is treated as zero.
+     */
+    public static add(a: IVector, b: IVector): IVector;
+
+    public static add(a: any, b?: any): IVector {
+        const vectors = Array.isArray(a) ? a : [a, b];
+        const response: IVector = Object.create(null);
+
+        for (const vector of vectors) {
+            for (const dimension of VectorMath.dimensions(vector)) {
+                const newAmount = vector[dimension];
+                if (newAmount === undefined) {
+                    continue;
+                }
+                response[dimension] =
+                    (response[dimension] || 0) + vector[dimension];
             }
         }
-    }
-    
-    return response;
-}
 
-/**
- * Subtracts from the intial all the given vectors.
- */
-export function subtract(initial: IVector, vectors: (IVector | IVector[])...): IVector {
-    const response: IVector = {...initial};
-    
-    for (const vector of flatten(vectors)) {
-        for (const dimension of dimensions(vector)) {
-            if (response[dimension] === undefined) {
-                response[dimension] = -vector[dimension];
-            } else {
-                response[dimension] = response[dimension] - vector[dimension];
+        return response;
+    }
+
+    /**
+     * Subtracts from the intial all the given vectors.
+     */
+    public static subtract(a: IVector, b: IVector): IVector {
+        const response: IVector = { ...a };
+
+        for (const dimension of VectorMath.dimensions(b)) {
+            const newAmount = b[dimension];
+            if (newAmount === undefined) {
+                continue;
+            }
+            response[dimension] = (response[dimension] || 0) - newAmount;
+        }
+
+        return response;
+    }
+
+    /**
+     * Multiplies the given vector by a scalar or by another vector.
+     */
+    public static multiply(a: IVector, b: number | IVector): IVector {
+        const response: IVector = { ...a };
+
+        for (const dimension of VectorMath.dimensions(response)) {
+            const currentAmount = a[dimension];
+            const factor = typeof b === "number" ? b : b[dimension] || 1;
+
+            if (currentAmount === 0 || currentAmount === undefined) {
+                continue;
+            }
+
+            response[dimension] = currentAmount * factor;
+        }
+
+        return response;
+    }
+
+    /**
+     * Divides the given vector by a scalar or by another vector.
+     */
+    public static divide(a: IVector, b: number | IVector): IVector {
+        const response: IVector = { ...a };
+
+        for (const dimension of VectorMath.dimensions(response)) {
+            const currentAmount = a[dimension];
+            const factor = typeof b === "number" ? b : b[dimension] || 1;
+
+            if (currentAmount === 0 || currentAmount === undefined) {
+                continue;
+            }
+
+            response[dimension] = currentAmount / factor;
+        }
+
+        return response;
+    }
+
+    /**
+     * Normalizes the given vector so that all values are between -1 and +1.
+     */
+    public static normalize(vector: IVector): IVector {
+        const response: IVector = { ...vector };
+
+        let min = Number.POSITIVE_INFINITY;
+        let max = Number.NEGATIVE_INFINITY;
+
+        for (const dimension of VectorMath.dimensions(response)) {
+            const amount = vector[dimension];
+
+            if (amount === 0 || amount === undefined) {
+                continue;
+            }
+
+            if (amount < min) {
+                min = amount;
+            }
+            if (amount > max) {
+                max = amount;
             }
         }
-    }
-    
-    return response;
-}
 
-/**
- * Multiplies the given vector by a scalar.
- */
-export function multiply(vector: IVector, scalar: number): IVector {
-    const response: IVector = {...initial};
-    
-    for (const dimension of dimensions(response)) {
-        response[dimension] = response[dimension] * scalar;
-    }
-    
-    return response;
-}
+        if (min > 0) {
+            min = 0;
+        }
+        if (max < 0) {
+            max = 0;
+        }
 
-/**
- * Divides the given vector by a scalar.
- */
-export function divide(vector: IVector, scalar: number): IVector {
-    const response: IVector = {...initial};
-    
-    for (const dimension of dimensions(response)) {
-        response[dimension] = response[dimension] / scalar;
-    }
-    
-    return response;
-}
+        const scale = Math.max(max, Math.abs(min));
 
-/**
- * Normalizes the given vector so that all values are between -1 and +1.
- */
-export function normalize(vector: IVector): IVector {
-    const response: IVector = {...initial};
-    
-    let min = Number.POSITIVE_INFINITY;
-    let max = Number.NEGATIVE_INFINITY;
-    
-    for (const dimension of dimensions(response)) {
-        if (response[dimension] < min) {
-            min = response[dimension];
-        }
-        if (response[dimension] > max) {
-            max = response[dimension];
-        }
-    }
-    
-    if (min > 0) {
-        min = 0;
-    }
-    if (max < 0) {
-        max = 0;
-    }
-    
-    const scale = Math.max(max, Math.abs(min));
-    
-    for (const dimension of dimensions(response)) {
-        response[dimension] = response[dimension] / scale;
-    }
-    
-    return response;
-}
+        for (const dimension of VectorMath.dimensions(response)) {
+            const amount = vector[dimension];
 
-/**
- * Normalizes the sum of all dimensions of the given vector between -1 and +1.
- */
-export function normalizeSum(vector: IVector): IVector {
-    const response: IVector = {...initial};
-    
-    let min = 0;
-    let max = 0;
-    
-    for (const dimension of dimensions(response)) {
-        if (response[dimension] < min) {
-            min += response[dimension];
-        }
-        if (response[dimension] > 0) {
-            max += response[dimension];
-        }
-    }
-    
-    if (min > 0) {
-        min = 0;
-    }
-    if (max < 0) {
-        max = 0;
-    }
-    
-    const scale = Math.max(max, Math.abs(min));
-    
-    for (const dimension of dimensions(response)) {
-        response[dimension] = response[dimension] / scale;
-    }
-    
-    return response;
-}
+            if (amount === 0 || amount === undefined) {
+                continue;
+            }
 
-/**
- * Returns all the dimensions that the vector uses.
- */
-export function dimensions(input: IVector): string[] {
-    return Object.getOwnPropertyNames(input);
-}
+            response[dimension] = amount / scale;
+        }
 
-/**
- * Decomposes the given vector into an array of its components.
- */
-export function decompose(input: IVector): IVector[] {
-    const response: IVector[] = [];
-    
-    for (const dimension of dimensions(input)) {
-        response.push({
-            [dimension]: input[dimension]
-        })
+        return response;
     }
-    
-    return response;
-}
 
-/**
- * Trims the vector removing zeroes and empty dimensions.
- */
-export function trim(input: IVector): IVector {
-    const response: IVector = {...initial};
-    
-    for (const dimension of dimensions(response)) {
-        if (response[dimension] === 0 || response[dimension] === undefined || response[dimension] === null) {
-            delete response[dimension];
-        }
-    }
-    
-    return response;
-}
+    /**
+     * Normalizes by the sum of all dimensions of the given vector between -1 and +1.
+     */
+    public static normalizeSum(vector: IVector): IVector {
+        const response: IVector = { ...vector };
 
-/**
- * Collapses all the dimensions of the given vector into a single one according with the conversion function.
- */
-export function collapse(input: IVector, toDimension: string, getRate: Model.getRate): Promise<IVector> {
-    const promises: Array<Promise<number>> = [];
-    
-    for (const dimension of dimensions(input)) {
-        if (dimension === toDimension || input[dimension] === 0 || input[dimension] === undefined || input[dimension] === null) {
-            continue;
-        }
-        
-        promises.push(getRate(toDimension, dimension, input[dimension]).then(rate => input[dimension] * rate));
-    }
-    
-    return Promise.all(promises).then(results => {
-        return {
-            [toDimension]: results.reduce((a,b) => a + b, undefined)
-        }
-    })
-}
+        let min = 0;
+        let max = 0;
 
-/**
- * Collapses all the dimensions of the given vector into a single one according with the conversion function in sync.
- */
-export function collapseSync(input: IVector, toDimension: string, getRate: Model.getRateSync): IVector {
-    let total;
-    
-    for (const dimension of dimensions(input)) {
-        if (dimension === toDimension || input[dimension] === 0 || input[dimension] === undefined || input[dimension] === null) {
-            continue;
-        }
-        if (total === undefined) {
-            total = 0
-        }
-        
-        total += input[dimension] * getRate(toDimension, dimension, input[dimension]);
-    }
-    
-    return {
-        [toDimension]: total
-    };
-}
+        for (const dimension of VectorMath.dimensions(response)) {
+            const amount = vector[dimension];
 
-/**
- * Flatten the input into a simple array.
- */
-function flatten(input: Array<IVector | IVector[]>): IVector[] {
-    const response: IVector[] = [];
-    
-    for (const element of input) {
-        if (Array.isArray(element)) {
-            response = response.concat(flatten(element));
-        } else {
-            response.push(element);
+            if (amount === 0 || amount === undefined) {
+                continue;
+            }
+
+            if (amount < 0) {
+                min += amount;
+            }
+            if (amount > 0) {
+                max += amount;
+            }
         }
+
+        if (min > 0) {
+            min = 0;
+        }
+        if (max < 0) {
+            max = 0;
+        }
+
+        const scale = Math.max(max, Math.abs(min));
+
+        for (const dimension of VectorMath.dimensions(response)) {
+            const amount = vector[dimension];
+
+            if (amount === 0 || amount === undefined) {
+                continue;
+            }
+
+            response[dimension] = amount / scale;
+        }
+
+        return response;
     }
-    
-    return response;
+
+    /**
+     * Returns all the dimensions that the vector uses.
+     */
+    public static dimensions(vector: IVector): string[] {
+        return Object.getOwnPropertyNames(vector);
+    }
+
+    /**
+     * Decomposes the vector in an array of IDimensionValuePair.
+     */
+    public static values(vector: IVector): IDimensionValuePair[] {
+        const response: IDimensionValuePair[] = [];
+
+        for (const dimension of VectorMath.dimensions(vector)) {
+            response.push({
+                dimension,
+                amount: vector[dimension]
+            });
+        }
+
+        return response;
+    }
+
+    /**
+     * Decomposes the given vector into an array of its components.
+     */
+    public static decompose(vector: IVector): IVector[] {
+        const response: IVector[] = [];
+
+        for (const dimension of VectorMath.dimensions(vector)) {
+            response.push({
+                [dimension]: vector[dimension]
+            });
+        }
+
+        return response;
+    }
+
+    /**
+     * Trims the vector removing zeroes and empty dimensions.
+     */
+    public static trim(vector: IVector): IVector {
+        const response: IVector = { ...vector };
+
+        for (const dimension of VectorMath.dimensions(response)) {
+            if (
+                response[dimension] === 0 ||
+                response[dimension] === undefined
+            ) {
+                delete response[dimension];
+            }
+        }
+
+        return response;
+    }
+
+    /**
+     * Collapses all the dimensions of the given vector into a single one according with the conversion function.
+     */
+    public static collapse(
+        vector: IVector,
+        toDimension: string,
+        fetchRateFn: getRate
+    ): Promise<IVector> {
+        const values = VectorMath.values(vector);
+
+        if (values.find(value => value.amount === undefined)) {
+            return Promise.resolve({ [toDimension]: undefined });
+        }
+
+        const promises: Array<Promise<number>> = [];
+
+        for (const value of values) {
+            const amount = value.amount;
+            if (amount === undefined) {
+                continue;
+            }
+            if (value.dimension === toDimension || amount === 0) {
+                promises.push(Promise.resolve(amount));
+                continue;
+            }
+
+            promises.push(
+                fetchRateFn(toDimension, value.dimension, amount).then(
+                    rate => amount * rate
+                )
+            );
+        }
+
+        if (promises.length === 0) {
+            return Promise.resolve({ [toDimension]: undefined });
+        }
+
+        return Promise.all(promises).then(results => {
+            return {
+                [toDimension]: results.reduce((a, b) => a + b, 0)
+            };
+        });
+    }
+
+    /**
+     * Collapses all the dimensions of the given vector into a single one according with the conversion function in sync.
+     */
+    public static collapseSync(
+        vector: IVector,
+        toDimension: string,
+        fetchRateFn: getRateSync
+    ): IVector {
+        const values = VectorMath.values(vector);
+
+        if (values.find(value => value.amount === undefined)) {
+            return { [toDimension]: undefined };
+        }
+
+        let total: number | undefined;
+
+        for (const value of values) {
+            const amount = value.amount;
+            if (amount === undefined) {
+                continue;
+            }
+            if (value.dimension === toDimension || amount === 0) {
+                total = (total || 0) + amount;
+                continue;
+            }
+
+            total =
+                (total || 0) +
+                amount * fetchRateFn(toDimension, value.dimension, amount);
+        }
+
+        return { [toDimension]: total };
+    }
+
+    /**
+     * Rounds the vector given using the desired precision.
+     */
+    public static round(
+        value: IVector,
+        precision: Precision,
+        rounding: Rounding = Rounding.Nearest
+    ): IVector {
+        const response: IVector = { ...value };
+
+        for (const dimension of VectorMath.dimensions(response)) {
+            const currentAmount = value[dimension];
+            if (currentAmount === undefined) {
+                continue;
+            }
+
+            response[dimension] = round(currentAmount, precision, rounding);
+        }
+
+        return response;
+    }
 }

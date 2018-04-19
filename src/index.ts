@@ -27,3 +27,4 @@ export * from "./Errors";
 export * from "./Balance";
 export * from "./PrecisionMath";
 export * from "./Value";
+export * from "./VectorMath";

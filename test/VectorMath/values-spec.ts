@@ -21,42 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Multi dimensional vector.
- */
-export interface IVector {
-    [key: string]: number | undefined;
-}
+import test from "ava";
 
-/**
- * The name and value of a single dimension in a vector.
- */
-export interface IDimensionValuePair {
-    dimension: string;
-    amount: number | undefined;
-}
+import { VectorMath } from "../../src/index";
 
-/**
- * Labeled matrix of multi dimensional vectors.
- */
-export interface IMatrix {
-    [key: string]: IVector;
-}
-
-/**
- * Returns a promise that till provide the rate between the given dimensions possibly taking into account the original amount.
- */
-export type getRate = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
-) => Promise<number>;
-
-/**
- * Returns the rate between the given dimensions possibly taking into account the original amount.
- */
-export type getRateSync = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
-) => number;
+test("Should get the values from a vector", t => {
+    t.deepEqual(VectorMath.values({}), []);
+    t.deepEqual(VectorMath.values({ A: 1, B: undefined, C: 0, D: -1 }), [
+        { dimension: "A", amount: 1 },
+        { dimension: "B", amount: undefined },
+        { dimension: "C", amount: 0 },
+        { dimension: "D", amount: -1 }
+    ]);
+});

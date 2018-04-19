@@ -21,42 +21,50 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Multi dimensional vector.
- */
-export interface IVector {
-    [key: string]: number | undefined;
-}
+import test from "ava";
 
-/**
- * The name and value of a single dimension in a vector.
- */
-export interface IDimensionValuePair {
-    dimension: string;
-    amount: number | undefined;
-}
+import { VectorMath } from "../../src/index";
 
-/**
- * Labeled matrix of multi dimensional vectors.
- */
-export interface IMatrix {
-    [key: string]: IVector;
-}
-
-/**
- * Returns a promise that till provide the rate between the given dimensions possibly taking into account the original amount.
- */
-export type getRate = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
-) => Promise<number>;
-
-/**
- * Returns the rate between the given dimensions possibly taking into account the original amount.
- */
-export type getRateSync = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
-) => number;
+test("Should normalize of a vector", t => {
+    t.deepEqual(VectorMath.normalize({}), {});
+    t.deepEqual(VectorMath.normalize({ A: 10, B: undefined, C: 0, D: -10 }), {
+        A: 1,
+        B: undefined,
+        C: 0,
+        D: -1
+    });
+    t.deepEqual(VectorMath.normalize({ A: 33, B: 12, C: -4, D: -85 }), {
+        A: 33 / 85,
+        B: 12 / 85,
+        C: -4 / 85,
+        D: -85 / 85
+    });
+    t.deepEqual(VectorMath.normalize({ A: 10, B: 20, C: 30, D: -54 }), {
+        A: 10 / 54,
+        B: 20 / 54,
+        C: 30 / 54,
+        D: -54 / 54
+    });
+    t.deepEqual(
+        VectorMath.normalize({
+            A: 10,
+            B: 20,
+            C: 30,
+            D: 40,
+            E: -1,
+            F: -2,
+            G: -3,
+            H: -4
+        }),
+        {
+            A: 10 / 40,
+            B: 20 / 40,
+            C: 30 / 40,
+            D: 40 / 40,
+            E: -1 / 40,
+            F: -2 / 40,
+            G: -3 / 40,
+            H: -4 / 40
+        }
+    );
+});

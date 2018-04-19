@@ -21,42 +21,50 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Multi dimensional vector.
- */
-export interface IVector {
-    [key: string]: number | undefined;
-}
+import test from "ava";
 
-/**
- * The name and value of a single dimension in a vector.
- */
-export interface IDimensionValuePair {
-    dimension: string;
-    amount: number | undefined;
-}
+import { VectorMath } from "../../src/index";
 
-/**
- * Labeled matrix of multi dimensional vectors.
- */
-export interface IMatrix {
-    [key: string]: IVector;
-}
-
-/**
- * Returns a promise that till provide the rate between the given dimensions possibly taking into account the original amount.
- */
-export type getRate = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
-) => Promise<number>;
-
-/**
- * Returns the rate between the given dimensions possibly taking into account the original amount.
- */
-export type getRateSync = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
-) => number;
+test("Should normalizeSum of a vector", t => {
+    t.deepEqual(VectorMath.normalizeSum({}), {});
+    t.deepEqual(VectorMath.normalizeSum({ A: 1, B: undefined, C: 0, D: -1 }), {
+        A: 1,
+        B: undefined,
+        C: 0,
+        D: -1
+    });
+    t.deepEqual(VectorMath.normalizeSum({ A: 33, B: 12, C: -4, D: -85 }), {
+        A: 33 / 89,
+        B: 12 / 89,
+        C: -4 / 89,
+        D: -85 / 89
+    });
+    t.deepEqual(VectorMath.normalizeSum({ A: 10, B: 20, C: 30, D: -54 }), {
+        A: 10 / 60,
+        B: 20 / 60,
+        C: 30 / 60,
+        D: -54 / 60
+    });
+    t.deepEqual(
+        VectorMath.normalizeSum({
+            A: 10,
+            B: 20,
+            C: 30,
+            D: 40,
+            E: -1,
+            F: -2,
+            G: -3,
+            H: -4
+        }),
+        {
+            A: 10 / 100,
+            B: 20 / 100,
+            C: 30 / 100,
+            D: 40 / 100,
+            E: -1 / 100,
+            F: -2 / 100,
+            G: -3 / 100,
+            H: -4 / 100
+        }
+    );
+});
