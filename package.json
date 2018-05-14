@@ -1,6 +1,6 @@
 {
     "name": "@raphaabreu/precision-math",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Objects and math functions to ease rounding and ensure enough precision when dealing with small fractions.",
     "license": "MIT",
     "repository": "https://github.com/raphaabreu/precision-math",
