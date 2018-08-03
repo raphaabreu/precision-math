@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,10 +25,10 @@
  * Error thrown when trying to calculate with an invalid precision.
  */
 export class InvalidPrecisionError extends Error {
-    constructor(message: string = "Invalid precision") {
-        super(message);
+  constructor(message: string = "Invalid precision") {
+    super(message);
 
-        Object.setPrototypeOf(this, new.target.prototype);
-        Error.captureStackTrace(this, InvalidPrecisionError);
-    }
+    Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this, InvalidPrecisionError);
+  }
 }

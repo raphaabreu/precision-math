@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,22 +26,22 @@ import test from "ava";
 import { VectorMath } from "../../src/index";
 
 test("Should subtract two vectors", t => {
-    t.deepEqual(VectorMath.subtract({ A: 1 }, { A: -0.4 }), {
-        A: 1.4
-    });
-    t.deepEqual(
-        VectorMath.subtract(
-            { A: 1, B: undefined },
-            { B: -0.4, C: 0, D: undefined }
-        ),
-        {
-            A: 1,
-            B: 0.4,
-            C: 0
-        }
-    );
-    t.deepEqual(VectorMath.subtract({ A: 1, B: 0.5 }, { A: -0.4, B: 2 }), {
-        A: 1.4,
-        B: -1.5
-    });
+  t.deepEqual(VectorMath.subtract({ A: 1 }, { A: -0.4 }), {
+    A: 1.4
+  });
+  t.deepEqual(
+    VectorMath.subtract(
+      { A: 1, B: undefined },
+      { B: -0.4, C: 0, D: undefined }
+    ),
+    {
+      A: 1,
+      B: 0.4,
+      C: 0
+    }
+  );
+  t.deepEqual(VectorMath.subtract({ A: 1, B: 0.5 }, { A: -0.4, B: 2 }), {
+    A: 1.4,
+    B: -1.5
+  });
 });

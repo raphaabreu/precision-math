@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,13 +25,13 @@ import test from "ava";
 import * as PrecisionMath from "../../src/index";
 
 test("Should instantiate a new UnsafeCalculationError", t => {
-    const error = new PrecisionMath.UnsafeCalculationError();
+  const error = new PrecisionMath.UnsafeCalculationError();
 
-    t.is(error.message, "Unsafe calculation detected");
+  t.is(error.message, "Unsafe calculation detected");
 });
 
 test("Should instantiate a new UnsafeCalculationError with custom message", t => {
-    const error = new PrecisionMath.UnsafeCalculationError("test message");
+  const error = new PrecisionMath.UnsafeCalculationError("test message");
 
-    t.is(error.message, "test message");
+  t.is(error.message, "test message");
 });

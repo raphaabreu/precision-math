@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -28,31 +28,31 @@ import { Precision } from "./Precision";
  * Defines an object whose value can be converted to IValue.
  */
 export interface IConvertible {
-    /**
-     * Converts to the given currency using the specified rate lookup callback and optional custom precision.
-     */
-    convertTo(
-        currency: string,
-        getRate: (
-            toSymbol: string,
-            fromSymbol: string,
-            conversionPrecision: Precision,
-            originalValue: IValue
-        ) => Promise<number>,
-        precision?: Precision
-    ): Promise<IValue>;
+  /**
+   * Converts to the given currency using the specified rate lookup callback and optional custom precision.
+   */
+  convertTo(
+    currency: string,
+    getRate: (
+      toSymbol: string,
+      fromSymbol: string,
+      conversionPrecision: Precision,
+      originalValue: IValue
+    ) => Promise<number>,
+    precision?: Precision
+  ): Promise<IValue>;
 
-    /**
-     * Converts in sync to the given currency using the specified rate lookup callback and optional custom precision.
-     */
-    convertToSync(
-        currency: string,
-        getRate: (
-            toSymbol: string,
-            fromSymbol: string,
-            conversionPrecision: Precision,
-            originalValue: IValue
-        ) => number,
-        precision?: Precision
-    ): IValue;
+  /**
+   * Converts in sync to the given currency using the specified rate lookup callback and optional custom precision.
+   */
+  convertToSync(
+    currency: string,
+    getRate: (
+      toSymbol: string,
+      fromSymbol: string,
+      conversionPrecision: Precision,
+      originalValue: IValue
+    ) => number,
+    precision?: Precision
+  ): IValue;
 }

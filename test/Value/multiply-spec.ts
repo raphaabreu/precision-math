@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,15 +25,15 @@ import test from "ava";
 import { Precision, Value } from "../../src/index";
 
 test("Should multiply by one factor", t => {
-    const initial: Value = new Value(Math.PI, "BTC", Precision.Thousandth);
-    const final = initial.multiply(0.5);
+  const initial: Value = new Value(Math.PI, "BTC", Precision.Thousandth);
+  const final = initial.multiply(0.5);
 
-    t.deepEqual(final, new Value(1.571, "BTC", Precision.Thousandth));
+  t.deepEqual(final, new Value(1.571, "BTC", Precision.Thousandth));
 });
 
 test("Should multiply by multiple factors", t => {
-    const initial: Value = new Value(10, "BTC", Precision.Thousandth);
-    const final = initial.multiply(0.5, 1.2, 5.1);
+  const initial: Value = new Value(10, "BTC", Precision.Thousandth);
+  const final = initial.multiply(0.5, 1.2, 5.1);
 
-    t.deepEqual(final, new Value(30.6, "BTC", Precision.Thousandth));
+  t.deepEqual(final, new Value(30.6, "BTC", Precision.Thousandth));
 });

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,16 +25,16 @@ import test from "ava";
 import { divide, Precision } from "../../src/index";
 
 test("Should divide numbers to desired precision", t => {
-    t.is(divide(Math.E, Math.PI, Precision.Integer), 1);
-    t.is(divide(Math.E, Math.PI, Precision.Tenth), 0.9);
-    t.is(divide(Math.E, Math.PI, Precision.Hundredth), 0.87);
-    t.is(divide(Math.E, Math.PI, Precision.Thousandth), 0.865);
-    t.is(divide(Math.E, Math.PI, Precision.TenThousandth), 0.8653);
-    t.is(divide(Math.E, Math.PI, Precision.HundredThousandth), 0.86526);
-    t.is(divide(Math.E, Math.PI, Precision.Millionth), 0.865256);
-    t.is(divide(Math.E, Math.PI, Precision.TenMillionth), 0.865256);
-    t.is(divide(Math.E, Math.PI, Precision.HundredMillionth), 0.86525598);
-    t.is(divide(Math.E, Math.PI, Precision.Billionth), 0.865255979);
-    t.is(divide(Math.E, Math.PI, Precision.TenBillionth), 0.8652559794);
-    t.is(divide(Math.E, Math.PI, Precision.HundredBillionth), 0.86525597943);
+  t.is(divide(Math.E, Math.PI, Precision.Integer), 1);
+  t.is(divide(Math.E, Math.PI, Precision.Tenth), 0.9);
+  t.is(divide(Math.E, Math.PI, Precision.Hundredth), 0.87);
+  t.is(divide(Math.E, Math.PI, Precision.Thousandth), 0.865);
+  t.is(divide(Math.E, Math.PI, Precision.TenThousandth), 0.8653);
+  t.is(divide(Math.E, Math.PI, Precision.HundredThousandth), 0.86526);
+  t.is(divide(Math.E, Math.PI, Precision.Millionth), 0.865256);
+  t.is(divide(Math.E, Math.PI, Precision.TenMillionth), 0.865256);
+  t.is(divide(Math.E, Math.PI, Precision.HundredMillionth), 0.86525598);
+  t.is(divide(Math.E, Math.PI, Precision.Billionth), 0.865255979);
+  t.is(divide(Math.E, Math.PI, Precision.TenBillionth), 0.8652559794);
+  t.is(divide(Math.E, Math.PI, Precision.HundredBillionth), 0.86525597943);
 });

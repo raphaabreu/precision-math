@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,19 +25,19 @@ import test from "ava";
 import { Precision, subtract } from "../../src/index";
 
 test("Should subtract numbers to desired precision", t => {
-    t.is(subtract(0.3, 0.1, Precision.Hundredth), 0.2);
-    t.is(subtract(0.3, 0.6, Precision.Hundredth), -0.3);
+  t.is(subtract(0.3, 0.1, Precision.Hundredth), 0.2);
+  t.is(subtract(0.3, 0.6, Precision.Hundredth), -0.3);
 
-    t.is(subtract(Math.E, Math.PI, Precision.Integer), -0);
-    t.is(subtract(Math.E, Math.PI, Precision.Tenth), -0.4);
-    t.is(subtract(Math.E, Math.PI, Precision.Hundredth), -0.42);
-    t.is(subtract(Math.E, Math.PI, Precision.Thousandth), -0.423);
-    t.is(subtract(Math.E, Math.PI, Precision.TenThousandth), -0.4233);
-    t.is(subtract(Math.E, Math.PI, Precision.HundredThousandth), -0.42331);
-    t.is(subtract(Math.E, Math.PI, Precision.Millionth), -0.423311);
-    t.is(subtract(Math.E, Math.PI, Precision.TenMillionth), -0.4233108);
-    t.is(subtract(Math.E, Math.PI, Precision.HundredMillionth), -0.42331083);
-    t.is(subtract(Math.E, Math.PI, Precision.Billionth), -0.423310825);
-    t.is(subtract(Math.E, Math.PI, Precision.TenBillionth), -0.4233108251);
-    t.is(subtract(Math.E, Math.PI, Precision.HundredBillionth), -0.42331082513);
+  t.is(subtract(Math.E, Math.PI, Precision.Integer), -0);
+  t.is(subtract(Math.E, Math.PI, Precision.Tenth), -0.4);
+  t.is(subtract(Math.E, Math.PI, Precision.Hundredth), -0.42);
+  t.is(subtract(Math.E, Math.PI, Precision.Thousandth), -0.423);
+  t.is(subtract(Math.E, Math.PI, Precision.TenThousandth), -0.4233);
+  t.is(subtract(Math.E, Math.PI, Precision.HundredThousandth), -0.42331);
+  t.is(subtract(Math.E, Math.PI, Precision.Millionth), -0.423311);
+  t.is(subtract(Math.E, Math.PI, Precision.TenMillionth), -0.4233108);
+  t.is(subtract(Math.E, Math.PI, Precision.HundredMillionth), -0.42331083);
+  t.is(subtract(Math.E, Math.PI, Precision.Billionth), -0.423310825);
+  t.is(subtract(Math.E, Math.PI, Precision.TenBillionth), -0.4233108251);
+  t.is(subtract(Math.E, Math.PI, Precision.HundredBillionth), -0.42331082513);
 });

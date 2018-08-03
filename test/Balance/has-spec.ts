@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,8 +25,8 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should evaluate if a symbol is present", t => {
-    const initial = new Balance({ BTC: -1, LTC: 2 }, Precision.Thousandth);
+  const initial = new Balance({ BTC: -1, LTC: 2 }, Precision.Thousandth);
 
-    t.true(initial.has("BTC"));
-    t.false(initial.has("XMR"));
+  t.true(initial.has("BTC"));
+  t.false(initial.has("XMR"));
 });

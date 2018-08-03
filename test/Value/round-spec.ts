@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,19 +25,19 @@ import test from "ava";
 import { Precision, Value } from "../../src/index";
 
 test("Should round to given precision", t => {
-    t.deepEqual(
-        new Value(1.23456789, "BTC", Precision.HundredMillionth).round(
-            Precision.Hundredth
-        ),
-        new Value(1.23, "BTC", Precision.Hundredth)
-    );
+  t.deepEqual(
+    new Value(1.23456789, "BTC", Precision.HundredMillionth).round(
+      Precision.Hundredth
+    ),
+    new Value(1.23, "BTC", Precision.Hundredth)
+  );
 });
 
 test("Should return the same if trying to round to given higher precision", t => {
-    t.deepEqual(
-        new Value(1.23456789, "BTC", Precision.HundredMillionth).round(
-            Precision.HundredBillionth
-        ),
-        new Value(1.23456789, "BTC", Precision.HundredBillionth)
-    );
+  t.deepEqual(
+    new Value(1.23456789, "BTC", Precision.HundredMillionth).round(
+      Precision.HundredBillionth
+    ),
+    new Value(1.23456789, "BTC", Precision.HundredBillionth)
+  );
 });

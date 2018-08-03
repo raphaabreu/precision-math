@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,13 +25,13 @@ import test from "ava";
 import * as index from "../../src/index";
 
 test("Should have InvalidValueError available", t => {
-    t.truthy(index.InvalidValueError);
+  t.truthy(index.InvalidValueError);
 });
 
 test("Should have InvalidPrecisionError available", t => {
-    t.truthy(index.InvalidPrecisionError);
+  t.truthy(index.InvalidPrecisionError);
 });
 
 test("Should have UnsafeCalculationError available", t => {
-    t.truthy(index.UnsafeCalculationError);
+  t.truthy(index.UnsafeCalculationError);
 });

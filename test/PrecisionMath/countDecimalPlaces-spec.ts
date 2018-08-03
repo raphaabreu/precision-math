@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,21 +25,21 @@ import test from "ava";
 import { countDecimalPlaces, Precision } from "../../src/index";
 
 test("Should count the number of decimal places on the string representation", t => {
-    t.is(countDecimalPlaces(".05"), 2);
-    t.is(countDecimalPlaces(".5"), 1);
-    t.is(countDecimalPlaces("1"), 0);
-    t.is(countDecimalPlaces("25e-100"), 100);
-    t.is(countDecimalPlaces("2.5e-99"), 100);
-    t.is(countDecimalPlaces(".5e1"), 0);
-    t.is(countDecimalPlaces(".25e1"), 1);
+  t.is(countDecimalPlaces(".05"), 2);
+  t.is(countDecimalPlaces(".5"), 1);
+  t.is(countDecimalPlaces("1"), 0);
+  t.is(countDecimalPlaces("25e-100"), 100);
+  t.is(countDecimalPlaces("2.5e-99"), 100);
+  t.is(countDecimalPlaces(".5e1"), 0);
+  t.is(countDecimalPlaces(".25e1"), 1);
 
-    t.is(countDecimalPlaces("-.05"), 2);
-    t.is(countDecimalPlaces("-.5"), 1);
-    t.is(countDecimalPlaces("-1"), 0);
-    t.is(countDecimalPlaces("-25e-100"), 100);
-    t.is(countDecimalPlaces("-2.5e-99"), 100);
-    t.is(countDecimalPlaces("-.5e1"), 0);
-    t.is(countDecimalPlaces("-.25e1"), 1);
+  t.is(countDecimalPlaces("-.05"), 2);
+  t.is(countDecimalPlaces("-.5"), 1);
+  t.is(countDecimalPlaces("-1"), 0);
+  t.is(countDecimalPlaces("-25e-100"), 100);
+  t.is(countDecimalPlaces("-2.5e-99"), 100);
+  t.is(countDecimalPlaces("-.5e1"), 0);
+  t.is(countDecimalPlaces("-.25e1"), 1);
 
-    t.is(countDecimalPlaces("abc"), 0);
+  t.is(countDecimalPlaces("abc"), 0);
 });

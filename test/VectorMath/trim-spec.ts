@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,9 +26,9 @@ import test from "ava";
 import { VectorMath } from "../../src/index";
 
 test("Should trim a vector", t => {
-    t.deepEqual(VectorMath.trim({}), {});
-    t.deepEqual(VectorMath.trim({ A: 1, B: undefined, C: 0, D: -1 }), {
-        A: 1,
-        D: -1
-    });
+  t.deepEqual(VectorMath.trim({}), {});
+  t.deepEqual(VectorMath.trim({ A: 1, B: undefined, C: 0, D: -1 }), {
+    A: 1,
+    D: -1
+  });
 });

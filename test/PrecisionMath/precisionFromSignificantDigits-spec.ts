@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,27 +25,27 @@ import test from "ava";
 import { Precision, precisionFromSignificantDigits } from "../../src/index";
 
 test("Should calculate the precision from the given amount and number of significant digits", t => {
-    t.is(precisionFromSignificantDigits(100, 1), 1);
-    t.is(precisionFromSignificantDigits(100, 2), 1);
-    t.is(precisionFromSignificantDigits(100, 3), 1);
-    t.is(precisionFromSignificantDigits(100, 4), 0.1);
-    t.is(precisionFromSignificantDigits(100, 5), 0.01);
-    t.is(precisionFromSignificantDigits(100, 6), 0.001);
-    t.is(precisionFromSignificantDigits(100, 7), 0.0001);
-    t.is(precisionFromSignificantDigits(12.3, 7), 0.00001);
-    t.is(precisionFromSignificantDigits(1.23, 7), 0.000001);
-    t.is(precisionFromSignificantDigits(0.123, 7), 0.0000001);
-    t.is(precisionFromSignificantDigits(0.0123, 7), 0.00000001);
+  t.is(precisionFromSignificantDigits(100, 1), 1);
+  t.is(precisionFromSignificantDigits(100, 2), 1);
+  t.is(precisionFromSignificantDigits(100, 3), 1);
+  t.is(precisionFromSignificantDigits(100, 4), 0.1);
+  t.is(precisionFromSignificantDigits(100, 5), 0.01);
+  t.is(precisionFromSignificantDigits(100, 6), 0.001);
+  t.is(precisionFromSignificantDigits(100, 7), 0.0001);
+  t.is(precisionFromSignificantDigits(12.3, 7), 0.00001);
+  t.is(precisionFromSignificantDigits(1.23, 7), 0.000001);
+  t.is(precisionFromSignificantDigits(0.123, 7), 0.0000001);
+  t.is(precisionFromSignificantDigits(0.0123, 7), 0.00000001);
 
-    t.is(precisionFromSignificantDigits(-100, 1), 1);
-    t.is(precisionFromSignificantDigits(-100, 2), 1);
-    t.is(precisionFromSignificantDigits(-100, 3), 1);
-    t.is(precisionFromSignificantDigits(-100, 4), 0.1);
-    t.is(precisionFromSignificantDigits(-100, 5), 0.01);
-    t.is(precisionFromSignificantDigits(-100, 6), 0.001);
-    t.is(precisionFromSignificantDigits(-100, 7), 0.0001);
-    t.is(precisionFromSignificantDigits(-12.3, 7), 0.00001);
-    t.is(precisionFromSignificantDigits(-1.23, 7), 0.000001);
-    t.is(precisionFromSignificantDigits(-0.123, 7), 0.0000001);
-    t.is(precisionFromSignificantDigits(-0.0123, 7), 0.00000001);
+  t.is(precisionFromSignificantDigits(-100, 1), 1);
+  t.is(precisionFromSignificantDigits(-100, 2), 1);
+  t.is(precisionFromSignificantDigits(-100, 3), 1);
+  t.is(precisionFromSignificantDigits(-100, 4), 0.1);
+  t.is(precisionFromSignificantDigits(-100, 5), 0.01);
+  t.is(precisionFromSignificantDigits(-100, 6), 0.001);
+  t.is(precisionFromSignificantDigits(-100, 7), 0.0001);
+  t.is(precisionFromSignificantDigits(-12.3, 7), 0.00001);
+  t.is(precisionFromSignificantDigits(-1.23, 7), 0.000001);
+  t.is(precisionFromSignificantDigits(-0.123, 7), 0.0000001);
+  t.is(precisionFromSignificantDigits(-0.0123, 7), 0.00000001);
 });

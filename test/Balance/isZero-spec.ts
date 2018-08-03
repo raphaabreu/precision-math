@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,14 +25,11 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should check if is zero", t => {
-    t.true(new Balance({}, Precision.Thousandth).isZero());
-    t.true(
-        new Balance({ BTC: 0, LTC: 0, XMR: 0 }, Precision.Thousandth).isZero()
-    );
-    t.false(
-        new Balance(
-            { BTC: 10, LTC: -20, XMR: 0 },
-            Precision.Thousandth
-        ).isZero()
-    );
+  t.true(new Balance({}, Precision.Thousandth).isZero());
+  t.true(
+    new Balance({ BTC: 0, LTC: 0, XMR: 0 }, Precision.Thousandth).isZero()
+  );
+  t.false(
+    new Balance({ BTC: 10, LTC: -20, XMR: 0 }, Precision.Thousandth).isZero()
+  );
 });

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,16 +25,16 @@ import test from "ava";
 import { modulo, Precision } from "../../src/index";
 
 test("Should calculate the modulo between two values using the desired precision", t => {
-    t.is(modulo(1, 0, Precision.Integer), Number.NaN);
-    t.is(modulo(0, 1, Precision.Integer), 0);
-    t.is(modulo(1, 1, Precision.Integer), 0);
-    t.is(modulo(1, 2, Precision.Integer), 1);
-    t.is(modulo(2, 2, Precision.Integer), 0);
-    t.is(modulo(2, 3, Precision.Integer), 2);
+  t.is(modulo(1, 0, Precision.Integer), Number.NaN);
+  t.is(modulo(0, 1, Precision.Integer), 0);
+  t.is(modulo(1, 1, Precision.Integer), 0);
+  t.is(modulo(1, 2, Precision.Integer), 1);
+  t.is(modulo(2, 2, Precision.Integer), 0);
+  t.is(modulo(2, 3, Precision.Integer), 2);
 
-    t.is(modulo(10, 4, Precision.Integer), 2);
+  t.is(modulo(10, 4, Precision.Integer), 2);
 
-    t.is(modulo(0.04, 0.1, Precision.Hundredth), 0.04);
-    t.is(modulo(0.0001, 0.0025, Precision.TenThousandth), 0.0001);
-    t.is(modulo(0.0125, 0.006, Precision.TenThousandth), 0.0005);
+  t.is(modulo(0.04, 0.1, Precision.Hundredth), 0.04);
+  t.is(modulo(0.0001, 0.0025, Precision.TenThousandth), 0.0001);
+  t.is(modulo(0.0125, 0.006, Precision.TenThousandth), 0.0005);
 });

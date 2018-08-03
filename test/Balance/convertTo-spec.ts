@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,80 +25,80 @@ import test from "ava";
 import { Balance, IValue, Precision, Value } from "../../src/index";
 
 test("Should convert to currency", t => {
-    const initial = new Balance(
-        { BTC: 12.345, LTC: 56.789 },
-        Precision.Thousandth
-    );
-    const getRate = (
-        fromSymbol: string,
-        toSymbol: string,
-        conversionPrecision?: Precision,
-        originalValue?: IValue
-    ) => {
-        t.is(fromSymbol, "XMR");
-        t.is(conversionPrecision, Precision.Thousandth);
+  const initial = new Balance(
+    { BTC: 12.345, LTC: 56.789 },
+    Precision.Thousandth
+  );
+  const getRate = (
+    fromSymbol: string,
+    toSymbol: string,
+    conversionPrecision?: Precision,
+    originalValue?: IValue
+  ) => {
+    t.is(fromSymbol, "XMR");
+    t.is(conversionPrecision, Precision.Thousandth);
 
-        if (toSymbol === "BTC") {
-            t.deepEqual(
-                originalValue,
-                new Value(12.345, toSymbol, Precision.Thousandth)
-            );
-            return Promise.resolve(987.654);
-        } else if (toSymbol === "LTC") {
-            t.deepEqual(
-                originalValue,
-                new Value(56.789, toSymbol, Precision.Thousandth)
-            );
-            return Promise.resolve(65.43);
-        } else {
-            t.fail("Symbol does not match.");
-            return Promise.reject(0);
-        }
-    };
+    if (toSymbol === "BTC") {
+      t.deepEqual(
+        originalValue,
+        new Value(12.345, toSymbol, Precision.Thousandth)
+      );
+      return Promise.resolve(987.654);
+    } else if (toSymbol === "LTC") {
+      t.deepEqual(
+        originalValue,
+        new Value(56.789, toSymbol, Precision.Thousandth)
+      );
+      return Promise.resolve(65.43);
+    } else {
+      t.fail("Symbol does not match.");
+      return Promise.reject(0);
+    }
+  };
 
-    return initial.convertTo("XMR", getRate).then(val => {
-        t.deepEqual(val, new Value(15908.293, "XMR", Precision.Thousandth));
-    });
+  return initial.convertTo("XMR", getRate).then(val => {
+    t.deepEqual(val, new Value(15908.293, "XMR", Precision.Thousandth));
+  });
 });
 
 test("Should convert to currency using custom precision", t => {
-    const initial = new Balance(
-        { BTC: 12.345, LTC: 56.789 },
-        Precision.Thousandth
-    );
-    const getRate = (
-        fromSymbol: string,
-        toSymbol: string,
-        conversionPrecision?: Precision,
-        originalValue?: IValue
-    ) => {
-        t.is(fromSymbol, "XMR");
-        t.is(conversionPrecision, Precision.HundredThousandth);
+  const initial = new Balance(
+    { BTC: 12.345, LTC: 56.789 },
+    Precision.Thousandth
+  );
+  const getRate = (
+    fromSymbol: string,
+    toSymbol: string,
+    conversionPrecision?: Precision,
+    originalValue?: IValue
+  ) => {
+    t.is(fromSymbol, "XMR");
+    t.is(conversionPrecision, Precision.HundredThousandth);
 
-        if (toSymbol === "BTC") {
-            t.deepEqual(
-                originalValue,
-                new Value(12.345, toSymbol, Precision.Thousandth)
-            );
-            return Promise.resolve(987.65432);
-        } else if (toSymbol === "LTC") {
-            t.deepEqual(
-                originalValue,
-                new Value(56.789, toSymbol, Precision.Thousandth)
-            );
-            return Promise.resolve(65.4321);
-        } else {
-            t.fail("Symbol does not match.");
-            return Promise.reject(0);
-        }
-    };
+    if (toSymbol === "BTC") {
+      t.deepEqual(
+        originalValue,
+        new Value(12.345, toSymbol, Precision.Thousandth)
+      );
+      return Promise.resolve(987.65432);
+    } else if (toSymbol === "LTC") {
+      t.deepEqual(
+        originalValue,
+        new Value(56.789, toSymbol, Precision.Thousandth)
+      );
+      return Promise.resolve(65.4321);
+    } else {
+      t.fail("Symbol does not match.");
+      return Promise.reject(0);
+    }
+  };
 
-    return initial
-        .convertTo("XMR", getRate, Precision.HundredThousandth)
-        .then(val => {
-            t.deepEqual(
-                val,
-                new Value(15908.41611, "XMR", Precision.HundredThousandth)
-            );
-        });
+  return initial
+    .convertTo("XMR", getRate, Precision.HundredThousandth)
+    .then(val => {
+      t.deepEqual(
+        val,
+        new Value(15908.41611, "XMR", Precision.HundredThousandth)
+      );
+    });
 });

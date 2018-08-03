@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,19 +25,19 @@ import test from "ava";
 import { Precision, Value } from "../../src/index";
 
 test("Should create an absolute equivalent", t => {
-    // Negative numbers become positive.
-    t.deepEqual(
-        new Value(-100, "BTC", Precision.Thousandth).abs(),
-        new Value(100, "BTC", Precision.Thousandth)
-    );
+  // Negative numbers become positive.
+  t.deepEqual(
+    new Value(-100, "BTC", Precision.Thousandth).abs(),
+    new Value(100, "BTC", Precision.Thousandth)
+  );
 
-    // Zero and positives remain unchanged.
-    t.deepEqual(
-        new Value(0, "BTC", Precision.Thousandth).abs(),
-        new Value(0, "BTC", Precision.Thousandth)
-    );
-    t.deepEqual(
-        new Value(200, "BTC", Precision.Thousandth).abs(),
-        new Value(200, "BTC", Precision.Thousandth)
-    );
+  // Zero and positives remain unchanged.
+  t.deepEqual(
+    new Value(0, "BTC", Precision.Thousandth).abs(),
+    new Value(0, "BTC", Precision.Thousandth)
+  );
+  t.deepEqual(
+    new Value(200, "BTC", Precision.Thousandth).abs(),
+    new Value(200, "BTC", Precision.Thousandth)
+  );
 });

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,21 +25,19 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should get the value of a single existing symbol", t => {
-    t.is(
-        new Balance(
-            { BTC: -1, LTC: -2, XMR: 3, ETH: 0 },
-            Precision.Thousandth
-        ).get("LTC"),
-        -2
-    );
+  t.is(
+    new Balance({ BTC: -1, LTC: -2, XMR: 3, ETH: 0 }, Precision.Thousandth).get(
+      "LTC"
+    ),
+    -2
+  );
 });
 
 test("Should return undefined if trying to get the value of a single non-existing symbol", t => {
-    t.is(
-        new Balance(
-            { BTC: -1, LTC: -2, XMR: 3, ETH: 0 },
-            Precision.Thousandth
-        ).get("BCC"),
-        undefined
-    );
+  t.is(
+    new Balance({ BTC: -1, LTC: -2, XMR: 3, ETH: 0 }, Precision.Thousandth).get(
+      "BCC"
+    ),
+    undefined
+  );
 });

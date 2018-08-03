@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,10 +26,10 @@
  * represented in the number space.
  */
 export class UnsafeCalculationError extends Error {
-    constructor(message: string = "Unsafe calculation detected") {
-        super(message);
+  constructor(message: string = "Unsafe calculation detected") {
+    super(message);
 
-        Object.setPrototypeOf(this, new.target.prototype);
-        Error.captureStackTrace(this, UnsafeCalculationError);
-    }
+    Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this, UnsafeCalculationError);
+  }
 }

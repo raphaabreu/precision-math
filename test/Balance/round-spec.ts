@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,42 +25,42 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should round a balance to lower precision", t => {
-    const initial = new Balance(
-        {
-            BTC: 45.12345679,
-            XMR: -18.19765432,
-            LTC: 40.69257802
-        },
-        Precision.HundredMillionth
-    );
-    const final = initial.round(Precision.Hundredth);
+  const initial = new Balance(
+    {
+      BTC: 45.12345679,
+      XMR: -18.19765432,
+      LTC: 40.69257802
+    },
+    Precision.HundredMillionth
+  );
+  const final = initial.round(Precision.Hundredth);
 
-    t.deepEqual(
-        final,
-        new Balance({ BTC: 45.12, XMR: -18.2, LTC: 40.69 }, Precision.Hundredth)
-    );
+  t.deepEqual(
+    final,
+    new Balance({ BTC: 45.12, XMR: -18.2, LTC: 40.69 }, Precision.Hundredth)
+  );
 });
 
 test("Should return the same if rounding a balance to higher precision", t => {
-    const initial = new Balance(
-        {
-            BTC: 45.12345679,
-            XMR: -18.19765432,
-            LTC: 40.69257802
-        },
-        Precision.HundredMillionth
-    );
-    const final = initial.round(Precision.HundredBillionth);
+  const initial = new Balance(
+    {
+      BTC: 45.12345679,
+      XMR: -18.19765432,
+      LTC: 40.69257802
+    },
+    Precision.HundredMillionth
+  );
+  const final = initial.round(Precision.HundredBillionth);
 
-    t.deepEqual(
-        final,
-        new Balance(
-            {
-                BTC: 45.12345679,
-                XMR: -18.19765432,
-                LTC: 40.69257802
-            },
-            Precision.HundredBillionth
-        )
-    );
+  t.deepEqual(
+    final,
+    new Balance(
+      {
+        BTC: 45.12345679,
+        XMR: -18.19765432,
+        LTC: 40.69257802
+      },
+      Precision.HundredBillionth
+    )
+  );
 });

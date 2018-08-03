@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,50 +25,50 @@ import test from "ava";
 import { Precision, Value } from "../../src/index";
 
 test("Should instantiate a new value", t => {
-    const v = new Value(100, "BTC", Precision.Thousandth);
+  const v = new Value(100, "BTC", Precision.Thousandth);
 
-    t.is(v.symbol, "BTC");
-    t.is(v.amount, 100);
-    t.is(v.precision, Precision.Thousandth);
+  t.is(v.symbol, "BTC");
+  t.is(v.amount, 100);
+  t.is(v.precision, Precision.Thousandth);
 });
 
 test("Should round the amount when instantiating a new value", t => {
-    const v = new Value(Math.PI, "BTC", Precision.Thousandth);
+  const v = new Value(Math.PI, "BTC", Precision.Thousandth);
 
-    t.is(v.symbol, "BTC");
-    t.is(v.amount, 3.142);
-    t.is(v.precision, Precision.Thousandth);
+  t.is(v.symbol, "BTC");
+  t.is(v.amount, 3.142);
+  t.is(v.precision, Precision.Thousandth);
 });
 
 test("Should throw if trying to instantiate without a symbol", t => {
-    const error = t.throws(() => new Value(100, "", Precision.Thousandth));
+  const error = t.throws(() => new Value(100, "", Precision.Thousandth));
 
-    t.is(error.message, "Symbol is required.");
+  t.is(error.message, "Symbol is required.");
 });
 
 test("Should throw if trying to instantiate without a number", t => {
-    const error = t.throws(
-        () => new Value(Number.NaN, "BTC", Precision.Thousandth)
-    );
+  const error = t.throws(
+    () => new Value(Number.NaN, "BTC", Precision.Thousandth)
+  );
 
-    t.is(error.message, "Amount is not a number.");
+  t.is(error.message, "Amount is not a number.");
 });
 
 test("Should throw if trying to instantiate with a non-numeric precision", t => {
-    const error = t.throws(() => new Value(100, "BTC", Number.NaN));
+  const error = t.throws(() => new Value(100, "BTC", Number.NaN));
 
-    t.is(error.message, "Precision is not a number.");
+  t.is(error.message, "Precision is not a number.");
 });
 
 test("Should throw if trying to instantiate with a value that cannot be represented on the given precision", t => {
-    process.env.STRICT_PRECISION = "true";
+  process.env.STRICT_PRECISION = "true";
 
-    const error = t.throws(() => new Value(100.0001, "BTC", Precision.Cent));
+  const error = t.throws(() => new Value(100.0001, "BTC", Precision.Cent));
 
-    process.env.STRICT_PRECISION = undefined;
+  process.env.STRICT_PRECISION = undefined;
 
-    t.is(
-        error.message,
-        "The amount 100.0001 cannot be represented using the precision 0.01 without loss of information."
-    );
+  t.is(
+    error.message,
+    "The amount 100.0001 cannot be represented using the precision 0.01 without loss of information."
+  );
 });

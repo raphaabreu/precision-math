@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,10 +25,10 @@
  * Error thrown when trying to use an invalid value.
  */
 export class InvalidValueError extends Error {
-    constructor(message: string = "Invalid value") {
-        super(message);
+  constructor(message: string = "Invalid value") {
+    super(message);
 
-        Object.setPrototypeOf(this, new.target.prototype);
-        Error.captureStackTrace(this, InvalidValueError);
-    }
+    Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this, InvalidValueError);
+  }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,85 +26,85 @@ import test from "ava";
 import { Precision, Rounding, VectorMath } from "../../src/index";
 
 test("Should round a vector to nearest value", t => {
-    t.deepEqual(VectorMath.round({}, Precision.Integer), {});
-    t.deepEqual(
-        VectorMath.round(
-            { A: 1.23456789, B: undefined, C: 0, D: -1.23456789 },
-            Precision.Millionth
-        ),
-        {
-            A: 1.234568,
-            B: undefined,
-            C: 0,
-            D: -1.234568
-        }
-    );
-    t.deepEqual(
-        VectorMath.round(
-            { A: 1.23456789, B: undefined, C: 0, D: -1.23456789 },
-            Precision.HundredBillionth
-        ),
-        {
-            A: 1.23456789,
-            B: undefined,
-            C: 0,
-            D: -1.23456789
-        }
-    );
+  t.deepEqual(VectorMath.round({}, Precision.Integer), {});
+  t.deepEqual(
+    VectorMath.round(
+      { A: 1.23456789, B: undefined, C: 0, D: -1.23456789 },
+      Precision.Millionth
+    ),
+    {
+      A: 1.234568,
+      B: undefined,
+      C: 0,
+      D: -1.234568
+    }
+  );
+  t.deepEqual(
+    VectorMath.round(
+      { A: 1.23456789, B: undefined, C: 0, D: -1.23456789 },
+      Precision.HundredBillionth
+    ),
+    {
+      A: 1.23456789,
+      B: undefined,
+      C: 0,
+      D: -1.23456789
+    }
+  );
 });
 
 test("Should round a vector ceiling it", t => {
-    t.deepEqual(
-        VectorMath.round(
-            { A: 1.23456789, B: -1.23456789 },
-            Precision.Hundredth,
-            Rounding.Ceil
-        ),
-        {
-            A: 1.24,
-            B: -1.23
-        }
-    );
+  t.deepEqual(
+    VectorMath.round(
+      { A: 1.23456789, B: -1.23456789 },
+      Precision.Hundredth,
+      Rounding.Ceil
+    ),
+    {
+      A: 1.24,
+      B: -1.23
+    }
+  );
 });
 
 test("Should round a vector flooring it", t => {
-    t.deepEqual(
-        VectorMath.round(
-            { A: 1.23456789, B: -1.23456789 },
-            Precision.Hundredth,
-            Rounding.Floor
-        ),
-        {
-            A: 1.23,
-            B: -1.24
-        }
-    );
+  t.deepEqual(
+    VectorMath.round(
+      { A: 1.23456789, B: -1.23456789 },
+      Precision.Hundredth,
+      Rounding.Floor
+    ),
+    {
+      A: 1.23,
+      B: -1.24
+    }
+  );
 });
 
 test("Should round a vector up", t => {
-    t.deepEqual(
-        VectorMath.round(
-            { A: 1.23456789, B: -1.23456789 },
-            Precision.Hundredth,
-            Rounding.Up
-        ),
-        {
-            A: 1.24,
-            B: -1.24
-        }
-    );
+  t.deepEqual(
+    VectorMath.round(
+      { A: 1.23456789, B: -1.23456789 },
+      Precision.Hundredth,
+      Rounding.Up
+    ),
+    {
+      A: 1.24,
+      B: -1.24
+    }
+  );
 });
 
 test("Should round a vector down", t => {
-    t.deepEqual(
-        VectorMath.round(
-            { A: 1.23456789, B: -1.23456789 },
-            Precision.Hundredth,
-            Rounding.Down
-        ),
-        {
-            A: 1.23,
-            B: -1.23
-        }
-    );
+  t.deepEqual(
+    VectorMath.round(
+      { A: 1.23456789, B: -1.23456789 },
+      Precision.Hundredth,
+      Rounding.Down
+    ),
+    {
+      A: 1.23,
+      B: -1.23
+    }
+  );
 });

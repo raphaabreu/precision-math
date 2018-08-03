@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,29 +25,23 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should multiply by one factor", t => {
-    const initial = new Balance(
-        { BTC: 12.34, LTC: 56.78 },
-        Precision.Hundredth
-    );
-    const final = initial.multiply(2.3456);
+  const initial = new Balance({ BTC: 12.34, LTC: 56.78 }, Precision.Hundredth);
+  const final = initial.multiply(2.3456);
 
-    t.deepEqual(initial.values, { BTC: 12.34, LTC: 56.78 });
-    t.deepEqual(
-        final,
-        new Balance({ BTC: 28.94, LTC: 133.18 }, Precision.Hundredth)
-    );
+  t.deepEqual(initial.values, { BTC: 12.34, LTC: 56.78 });
+  t.deepEqual(
+    final,
+    new Balance({ BTC: 28.94, LTC: 133.18 }, Precision.Hundredth)
+  );
 });
 
 test("Should multiply by multiple factors", t => {
-    const initial = new Balance(
-        { BTC: 12.34, LTC: 56.78 },
-        Precision.Hundredth
-    );
-    const final = initial.multiply(0.5, 1.2, 5.4);
+  const initial = new Balance({ BTC: 12.34, LTC: 56.78 }, Precision.Hundredth);
+  const final = initial.multiply(0.5, 1.2, 5.4);
 
-    t.deepEqual(initial.values, { BTC: 12.34, LTC: 56.78 });
-    t.deepEqual(
-        final,
-        new Balance({ BTC: 39.98, LTC: 183.97 }, Precision.Hundredth)
-    );
+  t.deepEqual(initial.values, { BTC: 12.34, LTC: 56.78 });
+  t.deepEqual(
+    final,
+    new Balance({ BTC: 39.98, LTC: 183.97 }, Precision.Hundredth)
+  );
 });

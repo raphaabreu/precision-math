@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,99 +25,99 @@
  * Precision alternatives.
  */
 export enum Precision {
-    /**
-     * One full unit.
-     */
-    Integer = 1,
+  /**
+   * One full unit.
+   */
+  Integer = 1,
 
-    /**
-     * One tenth of a unit.
-     * Common usage: 10^-1.
-     */
-    Tenth = 0.1,
+  /**
+   * One tenth of a unit.
+   * Common usage: 10^-1.
+   */
+  Tenth = 0.1,
 
-    /**
-     * One hundredth of a unit.
-     * Common usage: 10^-2, cent.
-     */
-    Hundredth = 0.01,
+  /**
+   * One hundredth of a unit.
+   * Common usage: 10^-2, cent.
+   */
+  Hundredth = 0.01,
 
-    /**
-     * One cent of a unit === one hundredth.
-     */
-    Cent = Hundredth,
+  /**
+   * One cent of a unit === one hundredth.
+   */
+  Cent = Hundredth,
 
-    /**
-     * One thousandth of a unit.
-     * Common usage: 10^-3, mBTC.
-     */
-    Thousandth = 0.001,
+  /**
+   * One thousandth of a unit.
+   * Common usage: 10^-3, mBTC.
+   */
+  Thousandth = 0.001,
 
-    /**
-     * One millie of a unit === one thousandth.
-     */
-    Millie = Thousandth,
+  /**
+   * One millie of a unit === one thousandth.
+   */
+  Millie = Thousandth,
 
-    /**
-     * One ten thousandth of a unit.
-     * Common usage: 10^-4.
-     */
-    TenThousandth = 0.0001,
+  /**
+   * One ten thousandth of a unit.
+   * Common usage: 10^-4.
+   */
+  TenThousandth = 0.0001,
 
-    /**
-     * One hundred thousandth of a unit.
-     * Common usage: 10^-5.
-     */
-    HundredThousandth = 0.00001,
+  /**
+   * One hundred thousandth of a unit.
+   * Common usage: 10^-5.
+   */
+  HundredThousandth = 0.00001,
 
-    /**
-     * One millionth of a unit.
-     * Common usage: 10^-6, micron, μBTC.
-     */
-    Millionth = 0.000001,
+  /**
+   * One millionth of a unit.
+   * Common usage: 10^-6, micron, μBTC.
+   */
+  Millionth = 0.000001,
 
-    /**
-     * One bit of a unit === one millionth.
-     */
-    Bit = Millionth,
+  /**
+   * One bit of a unit === one millionth.
+   */
+  Bit = Millionth,
 
-    /**
-     * One millionth of a unit.
-     * Common usage: 10^-7.
-     */
-    TenMillionth = 0.0000001,
+  /**
+   * One millionth of a unit.
+   * Common usage: 10^-7.
+   */
+  TenMillionth = 0.0000001,
 
-    /**
-     * One hundred millionth of a unit.
-     * Common usage: 10^-8, sat, satoshi.
-     */
-    HundredMillionth = 0.00000001,
+  /**
+   * One hundred millionth of a unit.
+   * Common usage: 10^-8, sat, satoshi.
+   */
+  HundredMillionth = 0.00000001,
 
-    /**
-     * One satoshi of a unit === one hundred millionth.
-     */
-    Satoshi = HundredMillionth,
+  /**
+   * One satoshi of a unit === one hundred millionth.
+   */
+  Satoshi = HundredMillionth,
 
-    /**
-     * One billionth of a unit.
-     * Common usage: 10^-9.
-     */
-    Billionth = 0.000000001,
+  /**
+   * One billionth of a unit.
+   * Common usage: 10^-9.
+   */
+  Billionth = 0.000000001,
 
-    /**
-     * One billionth of a unit.
-     * Common usage: 10^-10, csat, satoshi cent.
-     */
-    TenBillionth = 0.0000000001,
+  /**
+   * One billionth of a unit.
+   * Common usage: 10^-10, csat, satoshi cent.
+   */
+  TenBillionth = 0.0000000001,
 
-    /**
-     * One satoshi cent of a unit === one ten billionth.
-     */
-    SatoshiCent = TenBillionth,
+  /**
+   * One satoshi cent of a unit === one ten billionth.
+   */
+  SatoshiCent = TenBillionth,
 
-    /**
-     * One hundred billionth of a unit.
-     * Common usage: 10^-11.
-     */
-    HundredBillionth = 0.00000000001
+  /**
+   * One hundred billionth of a unit.
+   * Common usage: 10^-11.
+   */
+  HundredBillionth = 0.00000000001
 }

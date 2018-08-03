@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,48 +25,48 @@ import test from "ava";
 import { Balance, IBalance, multiply, Precision, Value } from "../../src/index";
 
 test("Should modify a balance according with the given function", t => {
-    const initial = new Balance({ BTC: 100 }, Precision.Thousandth);
-    const modifier = (
-        value: number,
-        symbol: string,
-        precision: Precision,
-        originalBalance: IBalance
-    ) => {
-        t.is(value, 100);
-        t.is(symbol, "BTC");
-        t.is(precision, Precision.Thousandth);
-        t.is(originalBalance, initial);
+  const initial = new Balance({ BTC: 100 }, Precision.Thousandth);
+  const modifier = (
+    value: number,
+    symbol: string,
+    precision: Precision,
+    originalBalance: IBalance
+  ) => {
+    t.is(value, 100);
+    t.is(symbol, "BTC");
+    t.is(precision, Precision.Thousandth);
+    t.is(originalBalance, initial);
 
-        return value + 55;
-    };
+    return value + 55;
+  };
 
-    t.deepEqual(
-        initial.modify(modifier),
-        new Balance({ BTC: 155 }, Precision.Thousandth)
-    );
+  t.deepEqual(
+    initial.modify(modifier),
+    new Balance({ BTC: 155 }, Precision.Thousandth)
+  );
 });
 
 test("Should modify a balance according with the given function with custom precision", t => {
-    const initial = new Balance(
-        { BTC: 1.1234567891234567 },
-        Precision.TenBillionth
-    );
-    const modifier = (
-        value: number,
-        symbol: string,
-        precision: Precision,
-        originalBalance: IBalance
-    ) => {
-        t.is(value, 1.1234567891);
-        t.is(symbol, "BTC");
-        t.is(precision, Precision.TenThousandth);
-        t.is(originalBalance, initial);
+  const initial = new Balance(
+    { BTC: 1.1234567891234567 },
+    Precision.TenBillionth
+  );
+  const modifier = (
+    value: number,
+    symbol: string,
+    precision: Precision,
+    originalBalance: IBalance
+  ) => {
+    t.is(value, 1.1234567891);
+    t.is(symbol, "BTC");
+    t.is(precision, Precision.TenThousandth);
+    t.is(originalBalance, initial);
 
-        return multiply(value, 123, precision);
-    };
+    return multiply(value, 123, precision);
+  };
 
-    t.deepEqual(
-        initial.modify(modifier, Precision.TenThousandth),
-        new Balance({ BTC: 138.1852 }, Precision.TenThousandth)
-    );
+  t.deepEqual(
+    initial.modify(modifier, Precision.TenThousandth),
+    new Balance({ BTC: 138.1852 }, Precision.TenThousandth)
+  );
 });

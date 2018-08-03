@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,100 +25,100 @@ import test from "ava";
 import { IValue, Precision, Value } from "../../src/index";
 
 const dummyRateLookupSync = (fromSymbol: string, toSymbol: string): number => {
-    throw new Error("This function should not have been called.");
+  throw new Error("This function should not have been called.");
 };
 
 test("Should return the same value in sync if trying to convert to the same symbol", t => {
-    const initial = new Value(100, "BTC", Precision.Hundredth);
-    const final = initial.convertToSync("BTC", dummyRateLookupSync);
+  const initial = new Value(100, "BTC", Precision.Hundredth);
+  const final = initial.convertToSync("BTC", dummyRateLookupSync);
 
-    t.is(final, initial);
+  t.is(final, initial);
 });
 
 test("Should return the same value in sync if trying to convert to the same symbol with the same precision", t => {
-    const initial = new Value(100, "BTC", Precision.Hundredth);
-    const final = initial.convertToSync(
-        "BTC",
-        dummyRateLookupSync,
-        Precision.Hundredth
-    );
+  const initial = new Value(100, "BTC", Precision.Hundredth);
+  const final = initial.convertToSync(
+    "BTC",
+    dummyRateLookupSync,
+    Precision.Hundredth
+  );
 
-    t.is(final, initial);
+  t.is(final, initial);
 });
 
 test("Should return the equivalent in sync value if trying to convert to the same symbol but custom precision", t => {
-    const initial = new Value(100, "BTC", Precision.Tenth);
-    const final = initial.convertToSync(
-        "BTC",
-        dummyRateLookupSync,
-        Precision.Thousandth
-    );
+  const initial = new Value(100, "BTC", Precision.Tenth);
+  const final = initial.convertToSync(
+    "BTC",
+    dummyRateLookupSync,
+    Precision.Thousandth
+  );
 
-    t.deepEqual(final, new Value(100, "BTC", Precision.Thousandth));
+  t.deepEqual(final, new Value(100, "BTC", Precision.Thousandth));
 });
 
 test("Should return zero value in sync if trying to convert zero value without custom precision", t => {
-    const initial = new Value(0, "BTC", Precision.Thousandth);
-    const final = initial.convertToSync("LTC", dummyRateLookupSync);
+  const initial = new Value(0, "BTC", Precision.Thousandth);
+  const final = initial.convertToSync("LTC", dummyRateLookupSync);
 
-    t.deepEqual(final, new Value(0, "LTC", Precision.Thousandth));
+  t.deepEqual(final, new Value(0, "LTC", Precision.Thousandth));
 });
 
 test("Should return zero value in sync if trying to convert zero value with custom precision", t => {
-    const initial = new Value(0, "BTC", Precision.Thousandth);
-    const final = initial.convertToSync(
-        "LTC",
-        dummyRateLookupSync,
-        Precision.HundredBillionth
-    );
+  const initial = new Value(0, "BTC", Precision.Thousandth);
+  const final = initial.convertToSync(
+    "LTC",
+    dummyRateLookupSync,
+    Precision.HundredBillionth
+  );
 
-    t.deepEqual(final, new Value(0, "LTC", Precision.HundredBillionth));
+  t.deepEqual(final, new Value(0, "LTC", Precision.HundredBillionth));
 });
 
 test("Should convert value in sync", t => {
-    const initial = new Value(123, "BTC", Precision.Tenth);
+  const initial = new Value(123, "BTC", Precision.Tenth);
 
-    const rateLookup = (
-        fromSymbol: string,
-        toSymbol: string,
-        conversionPrecision: Precision,
-        originalValue: IValue
-    ) => {
-        t.is(fromSymbol, "LTC");
-        t.is(toSymbol, "BTC");
-        t.is(conversionPrecision, Precision.Tenth);
-        t.is(originalValue, initial);
+  const rateLookup = (
+    fromSymbol: string,
+    toSymbol: string,
+    conversionPrecision: Precision,
+    originalValue: IValue
+  ) => {
+    t.is(fromSymbol, "LTC");
+    t.is(toSymbol, "BTC");
+    t.is(conversionPrecision, Precision.Tenth);
+    t.is(originalValue, initial);
 
-        return 0.123456789;
-    };
+    return 0.123456789;
+  };
 
-    const final = initial.convertToSync("LTC", rateLookup);
+  const final = initial.convertToSync("LTC", rateLookup);
 
-    t.deepEqual(final, new Value(15.2, "LTC", Precision.Tenth));
+  t.deepEqual(final, new Value(15.2, "LTC", Precision.Tenth));
 });
 
 test("Should convert value in sync with custom precision", t => {
-    const initial = new Value(123, "XRP", Precision.Tenth);
+  const initial = new Value(123, "XRP", Precision.Tenth);
 
-    const rateLookup = (
-        fromSymbol: string,
-        toSymbol: string,
-        conversionPrecision: Precision,
-        originalValue: IValue
-    ): number => {
-        t.is(fromSymbol, "BTC");
-        t.is(toSymbol, "XRP");
-        t.is(conversionPrecision, Precision.TenThousandth);
-        t.is(originalValue, initial);
+  const rateLookup = (
+    fromSymbol: string,
+    toSymbol: string,
+    conversionPrecision: Precision,
+    originalValue: IValue
+  ): number => {
+    t.is(fromSymbol, "BTC");
+    t.is(toSymbol, "XRP");
+    t.is(conversionPrecision, Precision.TenThousandth);
+    t.is(originalValue, initial);
 
-        return 0.123456789;
-    };
+    return 0.123456789;
+  };
 
-    const final = initial.convertToSync(
-        "BTC",
-        rateLookup,
-        Precision.TenThousandth
-    );
+  const final = initial.convertToSync(
+    "BTC",
+    rateLookup,
+    Precision.TenThousandth
+  );
 
-    t.deepEqual(final, new Value(15.1852, "BTC", Precision.TenThousandth));
+  t.deepEqual(final, new Value(15.1852, "BTC", Precision.TenThousandth));
 });

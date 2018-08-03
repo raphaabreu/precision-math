@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,45 +26,45 @@ import test from "ava";
 import { VectorMath } from "../../src/index";
 
 test("Should normalizeSum of a vector", t => {
-    t.deepEqual(VectorMath.normalizeSum({}), {});
-    t.deepEqual(VectorMath.normalizeSum({ A: 1, B: undefined, C: 0, D: -1 }), {
-        A: 1,
-        B: undefined,
-        C: 0,
-        D: -1
-    });
-    t.deepEqual(VectorMath.normalizeSum({ A: 33, B: 12, C: -4, D: -85 }), {
-        A: 33 / 89,
-        B: 12 / 89,
-        C: -4 / 89,
-        D: -85 / 89
-    });
-    t.deepEqual(VectorMath.normalizeSum({ A: 10, B: 20, C: 30, D: -54 }), {
-        A: 10 / 60,
-        B: 20 / 60,
-        C: 30 / 60,
-        D: -54 / 60
-    });
-    t.deepEqual(
-        VectorMath.normalizeSum({
-            A: 10,
-            B: 20,
-            C: 30,
-            D: 40,
-            E: -1,
-            F: -2,
-            G: -3,
-            H: -4
-        }),
-        {
-            A: 10 / 100,
-            B: 20 / 100,
-            C: 30 / 100,
-            D: 40 / 100,
-            E: -1 / 100,
-            F: -2 / 100,
-            G: -3 / 100,
-            H: -4 / 100
-        }
-    );
+  t.deepEqual(VectorMath.normalizeSum({}), {});
+  t.deepEqual(VectorMath.normalizeSum({ A: 1, B: undefined, C: 0, D: -1 }), {
+    A: 1,
+    B: undefined,
+    C: 0,
+    D: -1
+  });
+  t.deepEqual(VectorMath.normalizeSum({ A: 33, B: 12, C: -4, D: -85 }), {
+    A: 33 / 89,
+    B: 12 / 89,
+    C: -4 / 89,
+    D: -85 / 89
+  });
+  t.deepEqual(VectorMath.normalizeSum({ A: 10, B: 20, C: 30, D: -54 }), {
+    A: 10 / 60,
+    B: 20 / 60,
+    C: 30 / 60,
+    D: -54 / 60
+  });
+  t.deepEqual(
+    VectorMath.normalizeSum({
+      A: 10,
+      B: 20,
+      C: 30,
+      D: 40,
+      E: -1,
+      F: -2,
+      G: -3,
+      H: -4
+    }),
+    {
+      A: 10 / 100,
+      B: 20 / 100,
+      C: 30 / 100,
+      D: 40 / 100,
+      E: -1 / 100,
+      F: -2 / 100,
+      G: -3 / 100,
+      H: -4 / 100
+    }
+  );
 });

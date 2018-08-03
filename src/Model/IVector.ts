@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,38 +25,38 @@
  * Multi dimensional vector.
  */
 export interface IVector {
-    [key: string]: number | undefined;
+  [key: string]: number | undefined;
 }
 
 /**
  * The name and value of a single dimension in a vector.
  */
 export interface IDimensionValuePair {
-    dimension: string;
-    amount: number | undefined;
+  dimension: string;
+  amount: number | undefined;
 }
 
 /**
  * Labeled matrix of multi dimensional vectors.
  */
 export interface IMatrix {
-    [key: string]: IVector;
+  [key: string]: IVector;
 }
 
 /**
  * Returns a promise that till provide the rate between the given dimensions possibly taking into account the original amount.
  */
 export type getRate = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
+  toDimension: string,
+  fromDimension: string,
+  originalAmount: number
 ) => Promise<number>;
 
 /**
  * Returns the rate between the given dimensions possibly taking into account the original amount.
  */
 export type getRateSync = (
-    toDimension: string,
-    fromDimension: string,
-    originalAmount: number
+  toDimension: string,
+  fromDimension: string,
+  originalAmount: number
 ) => number;

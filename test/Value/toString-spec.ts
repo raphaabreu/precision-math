@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,24 +25,21 @@ import test from "ava";
 import { Precision, Value } from "../../src/index";
 
 test("Should return proper string representation", t => {
-    t.is(
-        new Value(-100, "BTC", Precision.HundredMillionth).toString(),
-        "-100.00000000 BTC"
-    );
-    t.is(
-        new Value(0, "BTC", Precision.HundredMillionth).toString(),
-        " 0.00000000 BTC"
-    );
-    t.is(
-        new Value(200, "BTC", Precision.HundredMillionth).toString(),
-        " 200.00000000 BTC"
-    );
-    t.is(
-        new Value(-0.55, "BTC", Precision.Thousandth).toString(),
-        "-0.550 BTC"
-    );
-    t.is(
-        new Value(-0.0678, "BTC", Precision.Thousandth).toString(),
-        "-0.068 BTC"
-    );
+  t.is(
+    new Value(-100, "BTC", Precision.HundredMillionth).toString(),
+    "-100.00000000 BTC"
+  );
+  t.is(
+    new Value(0, "BTC", Precision.HundredMillionth).toString(),
+    " 0.00000000 BTC"
+  );
+  t.is(
+    new Value(200, "BTC", Precision.HundredMillionth).toString(),
+    " 200.00000000 BTC"
+  );
+  t.is(new Value(-0.55, "BTC", Precision.Thousandth).toString(), "-0.550 BTC");
+  t.is(
+    new Value(-0.0678, "BTC", Precision.Thousandth).toString(),
+    "-0.068 BTC"
+  );
 });

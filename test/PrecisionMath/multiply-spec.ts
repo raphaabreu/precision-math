@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,16 +25,16 @@ import test from "ava";
 import { multiply, Precision } from "../../src/index";
 
 test("Should multiply numbers to desired precision", t => {
-    t.is(multiply(Math.E, Math.PI, Precision.Integer), 9);
-    t.is(multiply(Math.E, Math.PI, Precision.Tenth), 8.5);
-    t.is(multiply(Math.E, Math.PI, Precision.Hundredth), 8.54);
-    t.is(multiply(Math.E, Math.PI, Precision.Thousandth), 8.54);
-    t.is(multiply(Math.E, Math.PI, Precision.TenThousandth), 8.5397);
-    t.is(multiply(Math.E, Math.PI, Precision.HundredThousandth), 8.53973);
-    t.is(multiply(Math.E, Math.PI, Precision.Millionth), 8.539734);
-    t.is(multiply(Math.E, Math.PI, Precision.TenMillionth), 8.5397342);
-    t.is(multiply(Math.E, Math.PI, Precision.HundredMillionth), 8.53973422);
-    t.is(multiply(Math.E, Math.PI, Precision.Billionth), 8.539734223);
-    t.is(multiply(Math.E, Math.PI, Precision.TenBillionth), 8.5397342227);
-    t.is(multiply(Math.E, Math.PI, Precision.HundredBillionth), 8.53973422267);
+  t.is(multiply(Math.E, Math.PI, Precision.Integer), 9);
+  t.is(multiply(Math.E, Math.PI, Precision.Tenth), 8.5);
+  t.is(multiply(Math.E, Math.PI, Precision.Hundredth), 8.54);
+  t.is(multiply(Math.E, Math.PI, Precision.Thousandth), 8.54);
+  t.is(multiply(Math.E, Math.PI, Precision.TenThousandth), 8.5397);
+  t.is(multiply(Math.E, Math.PI, Precision.HundredThousandth), 8.53973);
+  t.is(multiply(Math.E, Math.PI, Precision.Millionth), 8.539734);
+  t.is(multiply(Math.E, Math.PI, Precision.TenMillionth), 8.5397342);
+  t.is(multiply(Math.E, Math.PI, Precision.HundredMillionth), 8.53973422);
+  t.is(multiply(Math.E, Math.PI, Precision.Billionth), 8.539734223);
+  t.is(multiply(Math.E, Math.PI, Precision.TenBillionth), 8.5397342227);
+  t.is(multiply(Math.E, Math.PI, Precision.HundredBillionth), 8.53973422267);
 });

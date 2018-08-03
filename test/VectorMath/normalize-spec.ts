@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,45 +26,45 @@ import test from "ava";
 import { VectorMath } from "../../src/index";
 
 test("Should normalize of a vector", t => {
-    t.deepEqual(VectorMath.normalize({}), {});
-    t.deepEqual(VectorMath.normalize({ A: 10, B: undefined, C: 0, D: -10 }), {
-        A: 1,
-        B: undefined,
-        C: 0,
-        D: -1
-    });
-    t.deepEqual(VectorMath.normalize({ A: 33, B: 12, C: -4, D: -85 }), {
-        A: 33 / 85,
-        B: 12 / 85,
-        C: -4 / 85,
-        D: -85 / 85
-    });
-    t.deepEqual(VectorMath.normalize({ A: 10, B: 20, C: 30, D: -54 }), {
-        A: 10 / 54,
-        B: 20 / 54,
-        C: 30 / 54,
-        D: -54 / 54
-    });
-    t.deepEqual(
-        VectorMath.normalize({
-            A: 10,
-            B: 20,
-            C: 30,
-            D: 40,
-            E: -1,
-            F: -2,
-            G: -3,
-            H: -4
-        }),
-        {
-            A: 10 / 40,
-            B: 20 / 40,
-            C: 30 / 40,
-            D: 40 / 40,
-            E: -1 / 40,
-            F: -2 / 40,
-            G: -3 / 40,
-            H: -4 / 40
-        }
-    );
+  t.deepEqual(VectorMath.normalize({}), {});
+  t.deepEqual(VectorMath.normalize({ A: 10, B: undefined, C: 0, D: -10 }), {
+    A: 1,
+    B: undefined,
+    C: 0,
+    D: -1
+  });
+  t.deepEqual(VectorMath.normalize({ A: 33, B: 12, C: -4, D: -85 }), {
+    A: 33 / 85,
+    B: 12 / 85,
+    C: -4 / 85,
+    D: -85 / 85
+  });
+  t.deepEqual(VectorMath.normalize({ A: 10, B: 20, C: 30, D: -54 }), {
+    A: 10 / 54,
+    B: 20 / 54,
+    C: 30 / 54,
+    D: -54 / 54
+  });
+  t.deepEqual(
+    VectorMath.normalize({
+      A: 10,
+      B: 20,
+      C: 30,
+      D: 40,
+      E: -1,
+      F: -2,
+      G: -3,
+      H: -4
+    }),
+    {
+      A: 10 / 40,
+      B: 20 / 40,
+      C: 30 / 40,
+      D: 40 / 40,
+      E: -1 / 40,
+      F: -2 / 40,
+      G: -3 / 40,
+      H: -4 / 40
+    }
+  );
 });

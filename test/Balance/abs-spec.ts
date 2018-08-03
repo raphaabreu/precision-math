@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,14 +25,14 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should create an absolute equivalent", t => {
-    t.deepEqual(
-        new Balance(
-            { BTC: -100, LTC: -200, XMR: 300, ETH: 0 },
-            Precision.TenThousandth
-        ).abs(),
-        new Balance(
-            { BTC: 100, LTC: 200, XMR: 300, ETH: 0 },
-            Precision.TenThousandth
-        )
-    );
+  t.deepEqual(
+    new Balance(
+      { BTC: -100, LTC: -200, XMR: 300, ETH: 0 },
+      Precision.TenThousandth
+    ).abs(),
+    new Balance(
+      { BTC: 100, LTC: 200, XMR: 300, ETH: 0 },
+      Precision.TenThousandth
+    )
+  );
 });

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,28 +23,28 @@
 
 import test from "ava";
 import {
-    fractionDigits,
-    InvalidPrecisionError,
-    Precision
+  fractionDigits,
+  InvalidPrecisionError,
+  Precision
 } from "../../src/index";
 
 test("Should calculate the number of fraction digits of a given precision", t => {
-    t.is(fractionDigits(Precision.Integer), 0);
-    t.is(fractionDigits(Precision.Tenth), 1);
-    t.is(fractionDigits(Precision.Hundredth), 2);
-    t.is(fractionDigits(Precision.Thousandth), 3);
-    t.is(fractionDigits(Precision.TenThousandth), 4);
-    t.is(fractionDigits(Precision.HundredThousandth), 5);
-    t.is(fractionDigits(Precision.Millionth), 6);
-    t.is(fractionDigits(Precision.TenMillionth), 7);
-    t.is(fractionDigits(Precision.HundredMillionth), 8);
-    t.is(fractionDigits(Precision.Billionth), 9);
-    t.is(fractionDigits(Precision.TenBillionth), 10);
-    t.is(fractionDigits(Precision.HundredBillionth), 11);
+  t.is(fractionDigits(Precision.Integer), 0);
+  t.is(fractionDigits(Precision.Tenth), 1);
+  t.is(fractionDigits(Precision.Hundredth), 2);
+  t.is(fractionDigits(Precision.Thousandth), 3);
+  t.is(fractionDigits(Precision.TenThousandth), 4);
+  t.is(fractionDigits(Precision.HundredThousandth), 5);
+  t.is(fractionDigits(Precision.Millionth), 6);
+  t.is(fractionDigits(Precision.TenMillionth), 7);
+  t.is(fractionDigits(Precision.HundredMillionth), 8);
+  t.is(fractionDigits(Precision.Billionth), 9);
+  t.is(fractionDigits(Precision.TenBillionth), 10);
+  t.is(fractionDigits(Precision.HundredBillionth), 11);
 });
 
 test("Should throw if trying to calculate the number of fraction digits with an invalid precision", t => {
-    const error = t.throws(() => fractionDigits(1.1));
+  const error = t.throws(() => fractionDigits(1.1));
 
-    t.true(error instanceof InvalidPrecisionError);
+  t.true(error instanceof InvalidPrecisionError);
 });

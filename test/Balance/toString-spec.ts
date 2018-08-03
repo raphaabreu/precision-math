@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,22 +25,22 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should return proper string representation", t => {
-    t.is(
-        new Balance(
-            {
-                BTC: 45.1234567890123,
-                XMR: -18.987654321876,
-                LTC: 40.69257802354
-            },
-            Precision.HundredMillionth
-        ).toString(),
-        "{  45.12345679 BTC, -18.98765432 XMR,  40.69257802 LTC }"
-    );
-    t.is(
-        new Balance(
-            { BTC: 45.123, XMR: -18.987, LTC: 40.542 },
-            Precision.Tenth
-        ).toString(),
-        "{  45.1 BTC, -19.0 XMR,  40.5 LTC }"
-    );
+  t.is(
+    new Balance(
+      {
+        BTC: 45.1234567890123,
+        XMR: -18.987654321876,
+        LTC: 40.69257802354
+      },
+      Precision.HundredMillionth
+    ).toString(),
+    "{  45.12345679 BTC, -18.98765432 XMR,  40.69257802 LTC }"
+  );
+  t.is(
+    new Balance(
+      { BTC: 45.123, XMR: -18.987, LTC: 40.542 },
+      Precision.Tenth
+    ).toString(),
+    "{  45.1 BTC, -19.0 XMR,  40.5 LTC }"
+  );
 });

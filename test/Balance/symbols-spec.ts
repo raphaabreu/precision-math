@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,9 +25,9 @@ import test from "ava";
 import { Balance, Precision, Value } from "../../src/index";
 
 test("Should return an array of symbols", t => {
-    t.deepEqual(
-        new Balance({ BTC: -1, LTC: -2, XMR: 3, ETH: 0 }, Precision.Thousandth)
-            .symbols,
-        ["BTC", "LTC", "XMR", "ETH"]
-    );
+  t.deepEqual(
+    new Balance({ BTC: -1, LTC: -2, XMR: 3, ETH: 0 }, Precision.Thousandth)
+      .symbols,
+    ["BTC", "LTC", "XMR", "ETH"]
+  );
 });

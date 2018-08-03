@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,28 +23,28 @@
 
 import test from "ava";
 import {
-    InvalidPrecisionError,
-    Precision,
-    precisionDivisor
+  InvalidPrecisionError,
+  Precision,
+  precisionDivisor
 } from "../../src/index";
 
 test("Should calculate the number of fraction digits of a given precision", t => {
-    t.is(precisionDivisor(Precision.Integer), 1);
-    t.is(precisionDivisor(Precision.Tenth), 10);
-    t.is(precisionDivisor(Precision.Hundredth), 100);
-    t.is(precisionDivisor(Precision.Thousandth), 1000);
-    t.is(precisionDivisor(Precision.TenThousandth), 10000);
-    t.is(precisionDivisor(Precision.HundredThousandth), 100000);
-    t.is(precisionDivisor(Precision.Millionth), 1000000);
-    t.is(precisionDivisor(Precision.TenMillionth), 10000000);
-    t.is(precisionDivisor(Precision.HundredMillionth), 100000000);
-    t.is(precisionDivisor(Precision.Billionth), 1000000000);
-    t.is(precisionDivisor(Precision.TenBillionth), 10000000000);
-    t.is(precisionDivisor(Precision.HundredBillionth), 100000000000);
+  t.is(precisionDivisor(Precision.Integer), 1);
+  t.is(precisionDivisor(Precision.Tenth), 10);
+  t.is(precisionDivisor(Precision.Hundredth), 100);
+  t.is(precisionDivisor(Precision.Thousandth), 1000);
+  t.is(precisionDivisor(Precision.TenThousandth), 10000);
+  t.is(precisionDivisor(Precision.HundredThousandth), 100000);
+  t.is(precisionDivisor(Precision.Millionth), 1000000);
+  t.is(precisionDivisor(Precision.TenMillionth), 10000000);
+  t.is(precisionDivisor(Precision.HundredMillionth), 100000000);
+  t.is(precisionDivisor(Precision.Billionth), 1000000000);
+  t.is(precisionDivisor(Precision.TenBillionth), 10000000000);
+  t.is(precisionDivisor(Precision.HundredBillionth), 100000000000);
 });
 
 test("Should throw if trying to calculate the number of fraction digits with an invalid precision", t => {
-    const error = t.throws(() => precisionDivisor(1.1));
+  const error = t.throws(() => precisionDivisor(1.1));
 
-    t.true(error instanceof InvalidPrecisionError);
+  t.true(error instanceof InvalidPrecisionError);
 });

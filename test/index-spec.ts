@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,13 +25,13 @@ import test from "ava";
 import * as index from "../src/index";
 
 test("Should have Precision available", t => {
-    t.truthy(index.Precision);
+  t.truthy(index.Precision);
 });
 
 test("Should have Value available", t => {
-    t.truthy(index.Value);
+  t.truthy(index.Value);
 });
 
 test("Should have Balance available", t => {
-    t.truthy(index.Balance);
+  t.truthy(index.Balance);
 });

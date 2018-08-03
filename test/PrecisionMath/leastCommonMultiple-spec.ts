@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,39 +23,39 @@
 
 import test from "ava";
 import {
-    InvalidValueError,
-    leastCommonMultiple,
-    Precision
+  InvalidValueError,
+  leastCommonMultiple,
+  Precision
 } from "../../src/index";
 
 test("Should calculate the least common multiple of two values using the desired precision", t => {
-    t.is(leastCommonMultiple(0, 0, Precision.Integer), Number.NaN);
+  t.is(leastCommonMultiple(0, 0, Precision.Integer), Number.NaN);
 
-    t.is(leastCommonMultiple(0, 1, Precision.Integer), 0);
-    t.is(leastCommonMultiple(1, 0, Precision.Integer), 0);
-    t.is(leastCommonMultiple(1, 1, Precision.Integer), 1);
+  t.is(leastCommonMultiple(0, 1, Precision.Integer), 0);
+  t.is(leastCommonMultiple(1, 0, Precision.Integer), 0);
+  t.is(leastCommonMultiple(1, 1, Precision.Integer), 1);
 
-    t.is(leastCommonMultiple(3, 4, Precision.Integer), 12);
-    t.is(leastCommonMultiple(4, 3, Precision.Integer), 12);
+  t.is(leastCommonMultiple(3, 4, Precision.Integer), 12);
+  t.is(leastCommonMultiple(4, 3, Precision.Integer), 12);
 
-    t.is(leastCommonMultiple(12, 80, Precision.Integer), 240);
-    t.is(leastCommonMultiple(25, 60, Precision.Integer), 300);
+  t.is(leastCommonMultiple(12, 80, Precision.Integer), 240);
+  t.is(leastCommonMultiple(25, 60, Precision.Integer), 300);
 
-    t.is(leastCommonMultiple(0.04, 0.1, Precision.Hundredth), 0.2);
-    t.is(leastCommonMultiple(0.0001, 0.0025, Precision.TenThousandth), 0.0025);
-    t.is(leastCommonMultiple(0.0125, 0.006, Precision.TenThousandth), 0.15);
+  t.is(leastCommonMultiple(0.04, 0.1, Precision.Hundredth), 0.2);
+  t.is(leastCommonMultiple(0.0001, 0.0025, Precision.TenThousandth), 0.0025);
+  t.is(leastCommonMultiple(0.0125, 0.006, Precision.TenThousandth), 0.15);
 });
 
 test("Should throw if trying to calculate the least common multiple of negative numbers", t => {
-    const error = t.throws(() => leastCommonMultiple(-5, 9, Precision.Integer));
+  const error = t.throws(() => leastCommonMultiple(-5, 9, Precision.Integer));
 
-    t.true(error instanceof InvalidValueError);
-    t.is(error.message, "Not possible to calculate LCM of negative numbers");
+  t.true(error instanceof InvalidValueError);
+  t.is(error.message, "Not possible to calculate LCM of negative numbers");
 });
 
 test("Should throw if trying to calculate the least common multiple of negative numbers", t => {
-    const error = t.throws(() => leastCommonMultiple(5, -9, Precision.Integer));
+  const error = t.throws(() => leastCommonMultiple(5, -9, Precision.Integer));
 
-    t.true(error instanceof InvalidValueError);
-    t.is(error.message, "Not possible to calculate LCM of negative numbers");
+  t.true(error instanceof InvalidValueError);
+  t.is(error.message, "Not possible to calculate LCM of negative numbers");
 });

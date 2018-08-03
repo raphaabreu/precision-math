@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Raphael Lorenzeto de Abreu <raphael.lorenzeto@gmail.com>
+ * Copyright (C) 2018 Atlas Project LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -31,21 +31,21 @@ import { Precision } from "../src/index";
  */
 
 test("Should have the correct precision values", t => {
-    t.is(Precision.Integer, 1);
-    t.is(Precision.Tenth, 0.1);
-    t.is(Precision.Hundredth, 0.01);
-    t.is(Precision.Cent, 0.01);
-    t.is(Precision.Thousandth, 0.001);
-    t.is(Precision.Millie, 0.001);
-    t.is(Precision.TenThousandth, 0.0001);
-    t.is(Precision.HundredThousandth, 0.00001);
-    t.is(Precision.Millionth, 0.000001);
-    t.is(Precision.Bit, 0.000001);
-    t.is(Precision.TenMillionth, 0.0000001);
-    t.is(Precision.HundredMillionth, 0.00000001);
-    t.is(Precision.Satoshi, 0.00000001);
-    t.is(Precision.Billionth, 0.000000001);
-    t.is(Precision.TenBillionth, 0.0000000001);
-    t.is(Precision.SatoshiCent, 0.0000000001);
-    t.is(Precision.HundredBillionth, 0.00000000001);
+  t.is(Precision.Integer, 1);
+  t.is(Precision.Tenth, 0.1);
+  t.is(Precision.Hundredth, 0.01);
+  t.is(Precision.Cent, 0.01);
+  t.is(Precision.Thousandth, 0.001);
+  t.is(Precision.Millie, 0.001);
+  t.is(Precision.TenThousandth, 0.0001);
+  t.is(Precision.HundredThousandth, 0.00001);
+  t.is(Precision.Millionth, 0.000001);
+  t.is(Precision.Bit, 0.000001);
+  t.is(Precision.TenMillionth, 0.0000001);
+  t.is(Precision.HundredMillionth, 0.00000001);
+  t.is(Precision.Satoshi, 0.00000001);
+  t.is(Precision.Billionth, 0.000000001);
+  t.is(Precision.TenBillionth, 0.0000000001);
+  t.is(Precision.SatoshiCent, 0.0000000001);
+  t.is(Precision.HundredBillionth, 0.00000000001);
 });
